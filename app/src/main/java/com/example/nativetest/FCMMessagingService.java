@@ -23,6 +23,7 @@ public class FCMMessagingService extends FirebaseMessagingService {
         } else {
             sendNotification(getApplicationContext(), remoteMessage.getData().get("title"),remoteMessage.getData().get("body"));
         }
+
     }
 
     @Override
