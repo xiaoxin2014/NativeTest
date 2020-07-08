@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">NativeTest</string>
+    <string name="setting">设置</string>
+
+    <!--Main-->
+    <string-array name="tab_names">
+        <item>我的</item>
+        <item>三俩</item>
+        <item>联系</item>
+        <item>个人</item>
+    </string-array>
 </resources>
