@@ -1,15 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical">
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
 
-    <com.example.nativetest.widget.TitleBar
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="@string/setting"/>
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <com.example.nativetest.widget.TitleBar
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/setting" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_person_info" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_notification"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_notification" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_hobby"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_hooby_manage" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_contact"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_contact_friend" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_modify_pwd"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_modify_pwd" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_company"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_company_contact" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_clear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_clear_cache" />
+
+        <com.example.nativetest.widget.SettingItemView
+            android:id="@+id/siv_logout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:item_content="@string/setting_logout" />
 
 
-
-</LinearLayout>
+    </LinearLayout>
+</ScrollView>

@@ -21,6 +21,11 @@
 
         <activity android:name=".MainActivity" />
         <activity android:name=".SettingActivity" />
+        <activity android:name=".SettingPersonInfoActivity" />
+        <activity android:name=".SettingNotificationActivity" />
+        <activity android:name=".ContactCompanyActivity" />
+        <activity android:name=".SettingPwdActivity" />
+        <activity android:name=".ModifyPwdActivity" />
 
 
     </application>

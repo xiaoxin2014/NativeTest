@@ -5,6 +5,11 @@
     <color name="colorAccent">#03DAC5</color>
 
 
+    <color name="line">#D9DBDF</color>
+    <color name="color_red_text">#F30048</color>
+
+
+
     <!-- **************************rongyun************************** -->
     <color name="main_theme_color">#0195ff</color>
 

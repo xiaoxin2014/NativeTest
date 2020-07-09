@@ -22,6 +22,7 @@ public class TitleBar extends RelativeLayout {
     private ImageView mTitleBarIvBack;
     private ImageView mTitleBarIvRight;
     private TextView mTitleBarTvTitle;
+    private TextView mTitleBarTvRight;
     private RelativeLayout mRlContainer;
 
     public TitleBar(Context context) {
@@ -46,6 +47,7 @@ public class TitleBar extends RelativeLayout {
         mTitleBarIvBack = (ImageView) findViewById(R.id.ivBack);
         mTitleBarIvRight = (ImageView) findViewById(R.id.ivRight);
         mTitleBarTvTitle = (TextView) findViewById(R.id.tvTitle);
+        mTitleBarTvRight = (TextView) findViewById(R.id.tvRight);
         mRlContainer = (RelativeLayout) findViewById(R.id.rlContainer);
 
 
@@ -53,6 +55,10 @@ public class TitleBar extends RelativeLayout {
             TypedArray array = context.obtainStyledAttributes(attrs, R.styleable.TitleBar);
             if (array.hasValue(R.styleable.TitleBar_title)) {
                 mTitleBarTvTitle.setText(array.getString(R.styleable.TitleBar_title));
+            }
+            if (array.hasValue(R.styleable.TitleBar_show_right_tv)) {
+                boolean b = array.getBoolean(R.styleable.TitleBar_show_right_tv, false);
+                mTitleBarTvRight.setVisibility(b?VISIBLE:GONE);
             }
 //            if (array.hasValue(R.styleable.TitleBar_right_icon)) {
 //                mTitleBarIvRight.setImageResource(array.getResourceId(R.styleable.TitleBar_right_icon,0));
@@ -121,5 +127,11 @@ public class TitleBar extends RelativeLayout {
         return mTitleBarIvRight;
     }
 
+    public TextView getTitleBarTvRight() {
+        return mTitleBarTvRight;
+    }
 
+    public void setRightEnable(boolean b){
+        mTitleBarTvRight.setEnabled(b);
+    }
 }
