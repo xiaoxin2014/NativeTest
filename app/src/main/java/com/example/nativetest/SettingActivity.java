@@ -52,7 +52,6 @@ public class SettingActivity extends BaseActivity {
                 }else{
                     readyGo(ModifyPwdActivity.class);
                 }
-
                 break;
             case R.id.siv_company:
                 readyGo(ContactCompanyActivity.class);
