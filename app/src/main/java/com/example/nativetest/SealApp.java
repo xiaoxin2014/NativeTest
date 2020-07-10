@@ -5,8 +5,10 @@ import android.app.Application;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 
+
+import com.example.nativetest.common.ErrorCode;
+import com.example.nativetest.ui.activity.MainActivity;
 
 import androidx.multidex.MultiDexApplication;
 import io.rong.imkit.RongConfigurationManager;
@@ -38,7 +40,7 @@ public class SealApp extends MultiDexApplication {
         // 初始化 bugly BUG 统计
         //CrashReport.initCrashReport(getApplicationContext());
 
-//        ErrorCode.init(this);
+        ErrorCode.init(this);
 
         /*
          * 以上部分在所有进程中会执行

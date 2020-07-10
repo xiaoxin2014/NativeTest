@@ -1,12 +1,12 @@
-package com.example.nativetest;
+package com.example.nativetest.ui.activity;
 
 import android.content.ClipboardManager;
 import android.content.Context;
-import android.os.Bundle;
 
+import com.example.nativetest.R;
+import com.example.nativetest.ui.activity.BaseActivity;
 import com.example.nativetest.utils.ToastUtils;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class ContactCompanyActivity extends BaseActivity {

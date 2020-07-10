@@ -6,11 +6,18 @@
 
 <!--    <include layout="@layout/main_layout_title" />-->
 
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/vp_main_container"
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/vp_main_container"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        android:layout_weight="1" />-->
+
+    <FrameLayout
+        android:id="@+id/fl_container"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_weight="1"/>
+
 
 
     <View

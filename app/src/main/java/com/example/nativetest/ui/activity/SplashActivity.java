@@ -1,10 +1,10 @@
-package com.example.nativetest;
+package com.example.nativetest.ui.activity;
 
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 
-import java.util.logging.Handler;
+import com.example.nativetest.R;
 
 import androidx.annotation.Nullable;
 

@@ -14,11 +14,13 @@
         android:id="@+id/siv_no_disturb"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_switch="true"
         app:item_content="@string/no_disturb" />
     <com.example.nativetest.widget.SettingItemView
         android:id="@+id/siv_show_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_switch="true"
         app:item_content="@string/show_noti_detail" />
 
     <View
@@ -29,11 +31,13 @@
         android:id="@+id/siv_sound"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_switch="true"
         app:item_content="@string/sound" />
     <com.example.nativetest.widget.SettingItemView
         android:id="@+id/siv_vibrate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:item_switch="true"
         app:item_content="@string/vibrate" />
 
 </LinearLayout>

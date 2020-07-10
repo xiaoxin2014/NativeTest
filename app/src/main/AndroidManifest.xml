@@ -9,8 +9,9 @@
         android:name=".SealApp"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme">
-        <activity android:name=".SplashActivity"
+        <activity android:name=".ui.activity.SplashActivity"
             android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -19,13 +20,19 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".MainActivity" />
-        <activity android:name=".SettingActivity" />
-        <activity android:name=".SettingPersonInfoActivity" />
-        <activity android:name=".SettingNotificationActivity" />
-        <activity android:name=".ContactCompanyActivity" />
-        <activity android:name=".SettingPwdActivity" />
-        <activity android:name=".ModifyPwdActivity" />
+        <activity android:name=".ui.activity.MainActivity" />
+        <activity android:name=".ui.activity.SettingActivity" />
+        <activity android:name=".ui.activity.SettingPersonInfoActivity" />
+        <activity android:name=".ui.activity.SettingNotificationActivity" />
+        <activity android:name=".ui.activity.ContactCompanyActivity" />
+        <activity android:name=".ui.activity.SettingPwdActivity" />
+        <activity android:name=".ui.activity.ModifyPwdActivity" />
+        <activity android:name=".ui.activity.SelectCityActivity1" />
+        <activity android:name=".ui.activity.SelectActivity2" />
+        <activity android:name=".ui.activity.SelectActivity3" />
+        <activity android:name=".TestTabActivity" />
+
+
 
 
     </application>

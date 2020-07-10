@@ -1,6 +1,5 @@
-package com.example.nativetest;
+package com.example.nativetest.ui.activity;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -21,7 +20,9 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 
+import com.example.nativetest.R;
 import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.widget.LoadingDialog;
 import com.gyf.immersionbar.ImmersionBar;
 
 import java.lang.reflect.Field;
@@ -42,7 +43,9 @@ public abstract class BaseActivity extends AppCompatActivity {
     private Handler handler = new Handler();
     private long lastClickTime;
     private Unbinder mBind;
+    private LoadingDialog dialog;
 
+    protected Context mContext;
 
     @Override
     protected void attachBaseContext(Context newBase) {
@@ -95,6 +98,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         //绑定控件
         mBind = ButterKnife.bind(this);
+        mContext = this;
         initView();
     }
 
@@ -385,14 +389,14 @@ public abstract class BaseActivity extends AppCompatActivity {
      *
      * @param msg
      */
-//    public void showLoadingDialog(String msg) {
-//        if (dialog == null || (dialog.getDialog() != null && !dialog.getDialog().isShowing())) {
-//            dialogCreateTime = System.currentTimeMillis();
-//            dialog = new LoadingDialog();
-//            dialog.setLoadingInformation(msg);
-//            dialog.show(getSupportFragmentManager(), "loading_dialog");
-//        }
-//    }
+    public void showLoadingDialog(String msg) {
+        if (dialog == null || (dialog.getDialog() != null && !dialog.getDialog().isShowing())) {
+            dialogCreateTime = System.currentTimeMillis();
+            dialog = new LoadingDialog();
+            dialog.setLoadingInformation(msg);
+            dialog.show(getSupportFragmentManager(), "loading_dialog");
+        }
+    }
 
     /**
      * 显示加载 dialog
@@ -400,7 +404,7 @@ public abstract class BaseActivity extends AppCompatActivity {
      * @param msgResId
      */
     public void showLoadingDialog(int msgResId) {
-//        showLoadingDialog(getString(msgResId));
+        showLoadingDialog(getString(msgResId));
     }
 
     /**
@@ -416,31 +420,31 @@ public abstract class BaseActivity extends AppCompatActivity {
      * 延迟关闭时间是因为接口有时返回太快。
      */
     public void dismissLoadingDialog(Runnable runnable) {
-//        if (dialog != null && dialog.getDialog() != null && dialog.getDialog().isShowing()) {
-//            // 由于可能请求接口太快，则导致加载页面一闪问题， 所有再次做判断，
-//            // 如果时间太快（小于 500ms）， 则会延时 1s，再做关闭。
-//            if (System.currentTimeMillis() - dialogCreateTime < 500) {
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (runnable != null) {
-//                            runnable.run();
-//                        }
-//                        if (dialog != null) {
-//                            dialog.dismiss();
-//                            dialog = null;
-//                        }
-//                    }
-//                }, 1000);
-//
-//            } else {
-//                dialog.dismiss();
-//                dialog = null;
-//                if (runnable != null) {
-//                    runnable.run();
-//                }
-//            }
-//        }
+        if (dialog != null && dialog.getDialog() != null && dialog.getDialog().isShowing()) {
+            // 由于可能请求接口太快，则导致加载页面一闪问题， 所有再次做判断，
+            // 如果时间太快（小于 500ms）， 则会延时 1s，再做关闭。
+            if (System.currentTimeMillis() - dialogCreateTime < 500) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (runnable != null) {
+                            runnable.run();
+                        }
+                        if (dialog != null) {
+                            dialog.dismiss();
+                            dialog = null;
+                        }
+                    }
+                }, 1000);
+
+            } else {
+                dialog.dismiss();
+                dialog = null;
+                if (runnable != null) {
+                    runnable.run();
+                }
+            }
+        }
     }
 
     /**

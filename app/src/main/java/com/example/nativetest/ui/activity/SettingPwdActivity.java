@@ -1,4 +1,4 @@
-package com.example.nativetest;
+package com.example.nativetest.ui.activity;
 
 import android.text.Editable;
 import android.text.TextUtils;
@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nativetest.R;
+import com.example.nativetest.ui.activity.BaseActivity;
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.widget.TitleBar;
 

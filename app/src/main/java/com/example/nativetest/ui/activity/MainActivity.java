@@ -1,8 +1,11 @@
-package com.example.nativetest;
+package com.example.nativetest.ui.activity;
 
-import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 
+import com.example.nativetest.R;
+import com.example.nativetest.TestTabActivity;
+import com.example.nativetest.ui.fragment.MainConversationListFragment;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;
 import com.example.nativetest.widget.TabGroupView;
@@ -12,7 +15,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
+import io.rong.imkit.fragment.ConversationListFragment;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.tg_bottom_tabs)
@@ -128,6 +134,9 @@ public class MainActivity extends BaseActivity {
 //                }
                 if(item.id == Tab.ME.getValue()){
                     readyGo(SettingActivity.class);
+                }else if(item.id == Tab.MY.getValue()){
+                    readyGo(TestTabActivity.class);
+                }else {
                 }
             }
         });
@@ -146,5 +155,24 @@ public class MainActivity extends BaseActivity {
 //            }
 //        });
 //        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
+
+
+        addFragment(new MainConversationListFragment());
+    }
+
+    private void addFragment(Fragment fragment) {
+        FragmentManager supportFragmentManager = getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = supportFragmentManager.beginTransaction();
+        fragmentTransaction.add(R.id.fl_container, fragment);
+        fragmentTransaction.hide(fragment);
+        fragmentTransaction.commit();
+    }
+
+    private void changeFragment(Fragment lastFragment) {
+//        FragmentTransaction fragmentTransaction = mSupportFragmentManager.beginTransaction();
+//        fragmentTransaction.hide(mSelectFragment);
+//        fragmentTransaction.show(lastFragment);
+//        fragmentTransaction.commit();
+//        mSelectFragment = lastFragment;
     }
 }

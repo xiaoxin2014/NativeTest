@@ -440,6 +440,7 @@ public class SwitchButton extends CompoundButton {
             mRectPaint.setColor(Color.parseColor("#0000FF"));
             canvas.drawRect(mPresentThumbRectF, mRectPaint);
             mRectPaint.setColor(Color.parseColor("#00CC00"));
+//            mRectPaint.setColor(Color.parseColor("#68A2FE"));
             canvas.drawRect(getProcess() > 0.5 ? mTextOnRectF : mTextOffRectF, mRectPaint);
         }
     }
