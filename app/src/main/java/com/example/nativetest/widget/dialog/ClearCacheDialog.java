@@ -1,6 +1,5 @@
-package com.example.nativetest.widget;
+package com.example.nativetest.widget.dialog;
 
-import android.icu.text.UnicodeSetIterator;
 import android.os.Environment;
 
 import com.example.nativetest.R;

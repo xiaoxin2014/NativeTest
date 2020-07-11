@@ -1,4 +1,4 @@
-package com.example.nativetest.widget;
+package com.example.nativetest.widget.dialog;
 
 import android.app.Dialog;
 import android.graphics.Color;
@@ -50,9 +50,9 @@ public class CommonDialog extends DialogFragment {
             //背景色
             window.setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
-            int dialogWidth = getDialogWidth();
+//            int dialogWidth = getDialogWidth();
+            int dialogWidth = (int) getResources().getDimension(R.dimen.common_dialog_width);
             if (dialogWidth > 0) {
-
                 dialog.getWindow().setLayout((int) dialogWidth, ViewGroup.LayoutParams.WRAP_CONTENT);
             }
         }

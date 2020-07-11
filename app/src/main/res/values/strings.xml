@@ -25,9 +25,18 @@
     <string name="old_pwd">旧密码</string>
     <string name="common_cancel">取消</string>
     <string name="common_confirm">确认</string>
+    <string name="common_clear">清理</string>
+
+
+    <string name="seal_dialog_select_picture_take_picture">拍照</string>
+    <string name="seal_dialog_select_picture_album">从本地导入</string>
+    <string name="seal_dialog_select_picture_cancel">取消</string>
+
+
 
     <string name="seal_set_account_dialog_toast_clear_cache_clear_success">清除成功</string>
-    <string name="seal_set_account_dialog_clear_cache_message">是否清除缓存?</string>
+    <string name="seal_set_account_dialog_clear_cache_message">清理临时数据，但不会影响三俩的正常使用</string>
+    <string name="seal_set_account_dialog_clear_cache_title">确定清理三俩的缓存？</string>
 
 
 
@@ -49,6 +58,18 @@
     <string name="seal_group_manager_copy_not_exist">群不存在或被解散</string>
     <string name="seal_group_manager_copy_fail">复制失败</string>
     <string name="select_city">选择城市</string>
+    <string name="nickname">昵称</string>
+    <string name="head_img">头像</string>
+    <string name="sex">性别</string>
+    <string name="city">城市</string>
+    <string name="not_required">以下非必选项</string>
+    <string name="personal_profile">个人简介</string>
+    <string name="school">学校</string>
+    <string name="age">年龄</string>
+    <string name="modify_nickname">修改昵称</string>
+    <string name="setting_your_nickname">设置你的昵称</string>
+    <string name="setting_your_school">填写你的学校</string>
+    <string name="setting_your_email">填写你的邮箱</string>
     <!--Main-->
     <string-array name="tab_names">
         <item>我的</item>

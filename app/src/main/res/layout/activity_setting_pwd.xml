@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <com.example.nativetest.widget.TitleBar
@@ -10,44 +10,23 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:show_right_tv="true"
-        app:title="@string/setting_pwd"/>
-    
+        app:title="@string/setting_pwd" />
+
     <EditText
         android:id="@+id/et_pwd"
-        android:maxLength="20"
-        android:textColor="@color/color_black_text"
-        android:inputType="textPassword"
-        android:textColorHint="#8F929A"
-        android:hint="新密码输入"
-        android:textSize="@dimen/sp_16"
-        android:background="@drawable/gray_4dp_bg"
-        android:paddingLeft="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"/>
+        style="@style/etPwdStyle"
+        android:hint="新密码输入" />
 
     <EditText
         android:id="@+id/et_confirm"
-        android:maxLength="20"
-        android:textColor="@color/color_black_text"
-        android:inputType="textPassword"
-        android:textColorHint="#8F929A"
         android:hint="再次输入密码"
-        android:textSize="@dimen/sp_16"
-        android:background="@drawable/gray_4dp_bg"
-        android:paddingLeft="@dimen/dp_10"
-        android:layout_marginLeft="@dimen/dp_12"
-        android:layout_marginRight="@dimen/dp_12"
-        android:layout_marginTop="@dimen/dp_16"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/dp_45"/>
+        style="@style/etPwdStyle"
+        />
 
     <TextView
-        android:visibility="gone"
         android:id="@+id/tv_tips"
+        style="@style/tv12RedStyle"
         android:text="两次密码不一致，请重新输入"
-        style="@style/tv12RedStyle" />
+        android:visibility="gone" />
 
 </LinearLayout>

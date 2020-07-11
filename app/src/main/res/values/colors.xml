@@ -7,6 +7,7 @@
 
     <color name="line">#D9DBDF</color>
     <color name="color_red_text">#F30048</color>
+    <color name="blackA">#0A0A0B</color>
 
 
 
@@ -37,7 +38,7 @@
     <color name="common_divider">#dfdfdd</color>
 
 
-    <color name="color_black_text">#202129</color>
+    <color name="color_black_text">#0A0A0B</color>
     <color name="seal_evaluate_dialog_divider">#eceef3</color>
     <color name="seal_evaluate_dialog_bg">#0e8cea</color>
     <color name="seal_evaluate_text_color">#3c4d65</color>
@@ -59,8 +60,8 @@
     <color name="seal_main_title_bg">#0195ff</color>
     <color name="seal_main_title_more_text_color">#353535</color>
 
-    <color name="seal_setting_item_content">#353535</color>
-    <color name="seal_setting_item_value">#666666</color>
+    <color name="seal_setting_item_content">#202129</color>
+    <color name="seal_setting_item_value">#65666C</color>
     <color name="seal_setting_item_divider">#dfdfdd</color>
     <color name="seal_mime_bg">#ebebeb</color>
     <color name="seal_userinfo_item_name_text">#353535</color>
@@ -78,8 +79,9 @@
     <color name="seal_dialog_select_picture_divider">#dfdfdd</color>
     <color name="seal_spannel_color">#0099ff</color>
 
-    <color name="common_dialog_base_line">#E5E5E5</color>
-    <color name="common_dialog_base_text">@color/color_black_text</color>
+    <color name="common_dialog_base_line">#EBEBEB</color>
+    <color name="common_dialog_base_text">#0A0A0B</color>
+    <color name="common_dialog_content_text">#65666C</color>
     <color name="common_dialog_base_positive">@color/color_black_text</color>
     <color name="seal_set_account_update_password_tag">#999999</color>
     <color name="seal_set_account_update_password_value">#dadada</color>
@@ -99,7 +101,7 @@
     <color name="bg_area_dim_white">#F2F2F3</color>
     <color name="default_main_text">@color/text_black</color>
     <color name="default_sub_text">@color/text_gray</color>
-    <color name="default_clickable_text">@color/text_blue</color>
+    <color name="default_clickable_text">#1F76FF</color>
     <color name="default_text_hint_color">@color/text_light_gray</color>
     <color name="default_main_area_background">@color/bg_area_dim_white</color>
     <color name="color_list_item_hover">#DFDFDD</color>
@@ -119,6 +121,7 @@
     <color name="seal_dialog_clean_notice_cancel">#0076FF</color>
 
     <color name="seal_group_detail_clean_tips">#8B8B8B</color>
+    <color name="grayB">#8F929A</color>
 
     <!-- **************************rongyun************************** -->
 

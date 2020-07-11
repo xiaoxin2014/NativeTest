@@ -572,11 +572,12 @@
     <dimen name="seal_main_title_item_text_size">16dp</dimen>
 
     <dimen name="seal_setting_item_def_height">48dp</dimen>
-    <dimen name="seal_setting_item_margin">14dp</dimen>
+    <dimen name="seal_setting_item_margin">12dp</dimen>
     <dimen name="seal_setting_item_text_size">16dp</dimen>
     <dimen name="seal_setting_item_divider">0.5dp</dimen>
 
     <dimen name="seal_mine_setting_item_height">46dp</dimen>
+    <dimen name="seal_mine_person_item_height">50dp</dimen>
     <dimen name="seal_mine_setting_item_margin_top">20dp</dimen>
     <dimen name="seal_userinfo_item_header_width">38dp</dimen>
     <dimen name="seal_userinfo_item_header_height">38dp</dimen>
@@ -637,17 +638,18 @@
     <dimen name="seal_search_item_div_height">14dp</dimen>
     <dimen name="seal_search_item_title_text_size">14sp</dimen>
     <dimen name="seal_search_show_more_text_size">16sp</dimen>
-    <dimen name="common_dialog_width">300dp</dimen>
-    <dimen name="common_dialog_line_width">1dp</dimen>
-    <dimen name="common_dialog_min_height">134dp</dimen>
-    <dimen name="common_dialog_button_height">44dp</dimen>
+    <dimen name="common_dialog_width">290dp</dimen>
+    <dimen name="common_dialog_line_width">0.5dp</dimen>
+    <dimen name="common_dialog_min_height">146dp</dimen>
+    <dimen name="common_dialog_button_height">55dp</dimen>
     <dimen name="common_dialog_common_min_height">90dp</dimen>
-    <dimen name="common_dialog_title_text_size">22dp</dimen>
-    <dimen name="common_dialog_text_size">18dp</dimen>
+    <dimen name="common_dialog_title_text_size">14sp</dimen>
+    <dimen name="common_dialog_text_size">14sp</dimen>
+    <dimen name="common_dialog_content_size">12sp</dimen>
     <dimen name="common_dialog_text_margin_left">13dp</dimen>
     <dimen name="common_dialog_text_margin_right">13dp</dimen>
     <dimen name="common_dialog_text_margin_top">20dp</dimen>
-    <dimen name="common_dialog_title_text_margin_top">16dp</dimen>
+    <dimen name="common_dialog_title_text_margin_top">23dp</dimen>
     <dimen name="common_dialog_text_margin_bottom">20dp</dimen>
     <dimen name="seal_mine_setting_item_tag_height">20dp</dimen>
     <dimen name="seal_mine_setting_item_tag_width">60dp</dimen>

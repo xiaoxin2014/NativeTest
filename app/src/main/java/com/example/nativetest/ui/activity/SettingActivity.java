@@ -1,13 +1,14 @@
 package com.example.nativetest.ui.activity;
 
+import android.os.Bundle;
 import android.view.View;
 
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Status;
 import com.example.nativetest.R;
 import com.example.nativetest.viewmodel.LoginViewModel;
-import com.example.nativetest.widget.ClearCacheDialog;
-import com.example.nativetest.widget.CommonDialog;
+import com.example.nativetest.widget.dialog.ClearCacheDialog;
+import com.example.nativetest.widget.dialog.CommonDialog;
 import com.example.nativetest.widget.SettingItemView;
 
 import androidx.lifecycle.Observer;
@@ -35,6 +36,8 @@ public class SettingActivity extends BaseActivity {
 
     boolean isFirst = true;
     private LoginViewModel mLoginViewModel;
+    private CommonDialog mLogoutDialog;
+    private CommonDialog mClearCacheDialog;
 
     @Override
     protected int getLayoutId() {
@@ -85,10 +88,10 @@ public class SettingActivity extends BaseActivity {
                 readyGo(SelectCityActivity1.class);
                 break;
             case R.id.siv_modify_pwd:
-                if(isFirst) {
+                if (isFirst) {
                     readyGo(SettingPwdActivity.class);
                     isFirst = false;
-                }else{
+                } else {
                     readyGo(ModifyPwdActivity.class);
                 }
                 break;
@@ -99,7 +102,7 @@ public class SettingActivity extends BaseActivity {
                 showClearDialog();
                 break;
             case R.id.siv_logout:
-                mLoginViewModel.login("","13305938755","qq123456");
+                logout();
                 break;
         }
     }
@@ -111,9 +114,34 @@ public class SettingActivity extends BaseActivity {
 //    }
 
     private void showClearDialog() {
-        ClearCacheDialog.Builder builder = new ClearCacheDialog.Builder();
-        builder.setContentMessage(getString(R.string.seal_set_account_dialog_clear_cache_message));
-        CommonDialog dialog = builder.build();
-        dialog.show(getSupportFragmentManager(), "clear_cache");
+        if(mClearCacheDialog==null) {
+            mClearCacheDialog = new ClearCacheDialog.Builder()
+                    .setTitleText(R.string.seal_set_account_dialog_clear_cache_title)
+                    .setContentMessage(getString(R.string.seal_set_account_dialog_clear_cache_message))
+                    .setButtonText(R.string.common_clear, R.string.common_cancel)
+                    .build();
+        }
+        mClearCacheDialog.show(getSupportFragmentManager(), "clear_cache");
     }
+
+    private void logout() {
+        if(mLogoutDialog==null) {
+            mLogoutDialog = new CommonDialog.Builder()
+                    .setTitleText(R.string.seal_set_account_dialog_clear_cache_title)
+                    .setContentMessage(getString(R.string.seal_set_account_dialog_clear_cache_message))
+                    .setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
+                        @Override
+                        public void onPositiveClick(View v, Bundle bundle) {
+                            mLoginViewModel.login("", "13305938755", "qq123456");
+                        }
+
+                        @Override
+                        public void onNegativeClick(View v, Bundle bundle) {
+                        }
+                    })
+                    .build();
+        }
+        mLogoutDialog.show(getSupportFragmentManager(), "logout");
+    }
+
 }

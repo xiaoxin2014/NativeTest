@@ -17,49 +17,65 @@
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_info"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_person"
             app:item_content="@string/setting_person_info" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_notification"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_notification"
             app:item_content="@string/setting_notification" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_hobby"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_hobby"
             app:item_content="@string/setting_hooby_manage" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_contact"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_contact"
             app:item_content="@string/setting_contact_friend" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_modify_pwd"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_modify_pwd"
             app:item_content="@string/setting_modify_pwd" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_company"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_company"
             app:item_content="@string/setting_company_contact" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_clear"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_clear"
             app:item_content="@string/setting_clear_cache" />
 
         <com.example.nativetest.widget.SettingItemView
             android:id="@+id/siv_logout"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/seal_mine_setting_item_height"
+            app:item_right_image="@drawable/img_item_setting_enter"
+            app:item_image="@drawable/img_setting_logout"
             app:item_content="@string/setting_logout" />
 
 

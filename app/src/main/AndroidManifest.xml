@@ -28,11 +28,10 @@
         <activity android:name=".ui.activity.SettingPwdActivity" />
         <activity android:name=".ui.activity.ModifyPwdActivity" />
         <activity android:name=".ui.activity.SelectCityActivity1" />
-        <activity android:name=".ui.activity.SelectActivity2" />
-        <activity android:name=".ui.activity.SelectActivity3" />
+        <activity android:name=".ui.activity.SelectCityActivity2" />
+        <activity android:name=".ui.activity.SelectCityActivity3" />
         <activity android:name=".TestTabActivity" />
-
-
+        <activity android:name=".ui.activity.ModifyNicknameActivity" />
 
 
     </application>

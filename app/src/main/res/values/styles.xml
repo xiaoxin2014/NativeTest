@@ -40,4 +40,19 @@
         <item name="android:layout_marginLeft">@dimen/dp_12</item>
     </style>
 
+    <style name="etPwdStyle">
+        <item name="android:maxLength">20</item>
+        <item name="android:textColor">@color/color_black_text</item>
+        <item name="android:inputType">textPassword</item>
+        <item name="android:textColorHint">#8F929A</item>
+        <item name="android:textSize">@dimen/sp_16</item>
+        <item name="android:background">@drawable/gray_4dp_bg</item>
+        <item name="android:paddingLeft">@dimen/dp_10</item>
+        <item name="android:layout_marginLeft">@dimen/dp_12</item>
+        <item name="android:layout_marginRight">@dimen/dp_12</item>
+        <item name="android:layout_marginTop">@dimen/dp_16</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/dp_45</item>
+    </style>
+
 </resources>
