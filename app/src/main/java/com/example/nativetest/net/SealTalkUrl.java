@@ -5,7 +5,8 @@ import com.example.nativetest.BuildConfig;
 
 public class SealTalkUrl {
 //    public static final String DOMAIN = BuildConfig.SEALTALK_SERVER;
-    public static final String DOMAIN ="http://107.148.200.175:80";
+//    public static final String DOMAIN ="http://107.148.200.175:80";
+    public static final String DOMAIN ="https://ttapi.alilusions.com";
 
     public static final String LOGIN = "user/login";
 

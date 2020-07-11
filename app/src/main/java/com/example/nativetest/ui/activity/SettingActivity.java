@@ -6,6 +6,7 @@ import android.view.View;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Status;
 import com.example.nativetest.R;
+import com.example.nativetest.model.sc.UserBean;
 import com.example.nativetest.viewmodel.LoginViewModel;
 import com.example.nativetest.widget.dialog.ClearCacheDialog;
 import com.example.nativetest.widget.dialog.CommonDialog;
@@ -50,6 +51,31 @@ public class SettingActivity extends BaseActivity {
         mLoginViewModel.getLoginResult().observe(this, new Observer<Resource<String>>() {
             @Override
             public void onChanged(Resource<String> resource) {
+                if (resource.status == Status.SUCCESS) {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast("Success");
+//                            toMain(resource.data);
+                        }
+                    });
+
+                } else if (resource.status == Status.LOADING) {
+                    showLoadingDialog("loading");
+                } else {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(resource.message);
+                        }
+                    });
+                }
+            }
+        });
+
+        mLoginViewModel.getGetUserResult().observe(this, new Observer<Resource<UserBean>>() {
+            @Override
+            public void onChanged(Resource<UserBean> resource) {
                 if (resource.status == Status.SUCCESS) {
                     dismissLoadingDialog(new Runnable() {
                         @Override
@@ -132,7 +158,8 @@ public class SettingActivity extends BaseActivity {
                     .setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
                         @Override
                         public void onPositiveClick(View v, Bundle bundle) {
-                            mLoginViewModel.login("", "13305938755", "qq123456");
+//                            mLoginViewModel.login("", "13305938755", "qq123456");
+                            mLoginViewModel.getUserInfo();
                         }
 
                         @Override

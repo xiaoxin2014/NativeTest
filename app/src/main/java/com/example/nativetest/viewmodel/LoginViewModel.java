@@ -3,6 +3,7 @@ package com.example.nativetest.viewmodel;
 import android.app.Application;
 
 import com.example.nativetest.model.Resource;
+import com.example.nativetest.model.sc.UserBean;
 import com.example.nativetest.task.UserTask;
 import com.example.nativetest.utils.SingleSourceLiveData;
 
@@ -13,6 +14,7 @@ import androidx.lifecycle.LiveData;
 public class LoginViewModel extends AndroidViewModel {
     private UserTask userTask;
     private SingleSourceLiveData<Resource<String>> loginResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<UserBean>> getUserResult = new SingleSourceLiveData<>();
 
 
     public LoginViewModel(@NonNull Application application) {
@@ -29,5 +31,13 @@ public class LoginViewModel extends AndroidViewModel {
 
     public LiveData<Resource<String>> getLoginResult(){
         return loginResult;
+    }
+
+    public void getUserInfo(){
+        getUserResult.setSource(userTask.getUserInfo());
+    }
+
+    public SingleSourceLiveData<Resource<UserBean>> getGetUserResult() {
+        return getUserResult;
     }
 }

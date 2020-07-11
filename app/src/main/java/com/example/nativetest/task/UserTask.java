@@ -4,28 +4,43 @@ import android.content.Context;
 
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
-import com.example.nativetest.model.Status;
+import com.example.nativetest.model.sc.NetResponse;
+import com.example.nativetest.model.sc.UserBean;
 import com.example.nativetest.net.HttpClientManager;
 import com.example.nativetest.net.NetworkOnlyResource;
 import com.example.nativetest.net.RetrofitUtil;
-import com.example.nativetest.net.service.NikoTest;
+import com.example.nativetest.net.service.ScUserService;
 
 import java.util.HashMap;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MediatorLiveData;
 import okhttp3.RequestBody;
 
 public class UserTask {
 //    private FileManager fileManager;
-    private NikoTest testService;
+    private ScUserService testService;
     private Context context;
 
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
-        testService = HttpClientManager.getInstance(context).getClient().createService(NikoTest.class);
+        testService = HttpClientManager.getInstance(context).getClient().createService(ScUserService.class);
     }
+
+
+    public LiveData<Resource<UserBean>> getUserInfo(){
+        return new NetworkOnlyResource<UserBean, NetResponse<UserBean>>() {
+            @NonNull
+            @Override
+            protected LiveData<NetResponse<UserBean>> createCall() {
+                HashMap<String, Object> paramsMap = new HashMap<>();
+                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
+                return testService.getUserInfo(body);
+            }
+        }.asLiveData();
+    }
+
+
     /**
      * 用户登录
      *
@@ -36,6 +51,7 @@ public class UserTask {
     public LiveData<Resource<String>> login(String region, String phone, String password) {
 //        MediatorLiveData<Resource<String>> result = new MediatorLiveData<>();
 //        result.setValue(Resource.loading(null));
+
         LiveData<Resource<String>> login = new NetworkOnlyResource<String, Result<String>>() {
             @NonNull
             @Override
@@ -48,6 +64,12 @@ public class UserTask {
             }
         }.asLiveData();
         return login;
+
+
+
+
+
+
 //        result.addSource(login, loginResultResource -> {
 //            if (loginResultResource.status == Status.SUCCESS) {
 //                result.removeSource(login);

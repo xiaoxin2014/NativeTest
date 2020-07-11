@@ -3,6 +3,7 @@ package com.example.nativetest.net;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Log;
 
 import com.example.nativetest.common.NetConstant;
 
@@ -22,6 +23,7 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
@@ -127,6 +129,14 @@ public class RetrofitClient {
                 config.putStringSet(NetConstant.API_SP_KEY_NET_COOKIE_SET, cookiesSet);
                 config.apply();
             }
+
+
+            Request request = chain.request();
+            Log.e("retrofitResponse", String.format("Sending request %s on %s%n%s",
+                    request.url(), chain.connection(), request.headers(),request.headers("Cookie")));
+            ResponseBody body = originalResponse.peekBody(1024*1024);
+            String responseString = body.string();
+            Log.e("retrofitResponse", request.url()+"---------"+ responseString);
 
             return originalResponse;
         }
