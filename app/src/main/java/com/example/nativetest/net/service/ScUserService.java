@@ -8,6 +8,7 @@ import com.example.nativetest.net.ScUrl;
 import androidx.lifecycle.LiveData;
 import okhttp3.RequestBody;
 import retrofit2.http.Body;
+import retrofit2.http.Header;
 import retrofit2.http.POST;
 
 public interface ScUserService {
@@ -16,5 +17,5 @@ public interface ScUserService {
 
 
     @POST(ScUrl.USER_INFO_GET)
-    LiveData<NetResponse<UserBean>> getUserInfo(@Body RequestBody body);
+    LiveData<NetResponse<UserBean>> getUserInfo(@Header("www-authenticate") String token, @Body RequestBody body);
 }

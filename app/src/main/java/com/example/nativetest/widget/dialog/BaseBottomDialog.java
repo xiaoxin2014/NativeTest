@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
 
+import com.example.nativetest.R;
+
 import androidx.fragment.app.DialogFragment;
 
 public class BaseBottomDialog extends DialogFragment {
@@ -20,7 +22,7 @@ public class BaseBottomDialog extends DialogFragment {
         Window win = getDialog().getWindow();
         // 一定要设置Background，如果不设置，window属性设置无效
         win.setBackgroundDrawable( new ColorDrawable(Color.TRANSPARENT));
-
+        win.getAttributes().windowAnimations = R.style.DatePickerDialogAnim;
         //全屏化对话框
         DisplayMetrics dm = new DisplayMetrics();
         getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);

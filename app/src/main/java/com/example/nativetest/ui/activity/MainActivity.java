@@ -5,6 +5,7 @@ import android.view.View;
 
 import com.example.nativetest.R;
 import com.example.nativetest.TestTabActivity;
+import com.example.nativetest.db.DbManager;
 import com.example.nativetest.ui.fragment.MainConversationListFragment;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;

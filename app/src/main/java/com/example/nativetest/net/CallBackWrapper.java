@@ -2,6 +2,7 @@ package com.example.nativetest.net;
 
 import com.example.nativetest.common.ErrorCode;
 import com.example.nativetest.common.LogTag;
+import com.example.nativetest.common.NetConstant;
 import com.example.nativetest.common.ResultCallback;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.utils.log.SLog;
@@ -21,14 +22,14 @@ public class CallBackWrapper<R> implements Callback<Result<R>> {
     public void onResponse(Call<Result<R>> call, Response<Result<R>> response) {
         Result<R> body = response.body();
         if (body != null) {
-            int code = body.getCode();
-            if (code == 200) {
-                mCallBack.onSuccess(body.getResult());
+            int code = body.getRsCode();
+            if (code == NetConstant.REQUEST_SUCCESS_CODE) {
+                mCallBack.onSuccess(body.getRsData());
             } else {
                 mCallBack.onFail(code);
             }
             SLog.e(LogTag.API, "url:" + call.request().url().toString()
-                    + " ,code:" + body.getCode());
+                    + " ,code:" + body.RsCode);
         } else {
             SLog.e(LogTag.API, "url:" + call.request().url().toString() + ", no response body");
             mCallBack.onFail(ErrorCode.API_ERR_OTHER.getCode());

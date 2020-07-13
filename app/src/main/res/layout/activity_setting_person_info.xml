@@ -37,13 +37,13 @@
 
     <com.example.nativetest.widget.SettingItemView
         android:gravity="center_vertical"
-        android:id="@+id/siv_sex"
+        android:id="@+id/siv_gender"
         android:layout_width="match_parent"
         android:layout_height="@dimen/dp_50"
         app:item_right_image="@drawable/img_item_setting_enter"
         app:item_divider="true"
         app:item_value="男"
-        app:item_content="@string/sex"/>
+        app:item_content="@string/gender"/>
 
     <com.example.nativetest.widget.SettingItemView
         android:gravity="center_vertical"

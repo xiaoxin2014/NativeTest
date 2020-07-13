@@ -1,8 +1,12 @@
 package com.example.nativetest.ui.activity;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 
+import com.alibaba.fastjson.JSON;
+import com.example.nativetest.db.DbManager;
+import com.example.nativetest.db.dao.UserDao;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Status;
 import com.example.nativetest.R;
@@ -11,6 +15,8 @@ import com.example.nativetest.viewmodel.LoginViewModel;
 import com.example.nativetest.widget.dialog.ClearCacheDialog;
 import com.example.nativetest.widget.dialog.CommonDialog;
 import com.example.nativetest.widget.SettingItemView;
+
+import org.json.JSONObject;
 
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
@@ -109,9 +115,42 @@ public class SettingActivity extends BaseActivity {
                 readyGo(SettingNotificationActivity.class);
                 break;
             case R.id.siv_hobby:
+                DbManager.getInstance(mContext).openDb("niko");
+
+                new Thread(new Runnable() {
+                    @Override
+                    public void run() {
+                        UserDao userDao = DbManager.getInstance(mContext).getUserDao();
+                        String s = "{\n" +
+                                "    \"Firstname\": \"string\",\n" +
+                                "    \"Lastname\": \"string\",\n" +
+                                "    \"Email\": \"string\",\n" +
+                                "    \"Phone\": \"string\",\n" +
+                                "    \"Gender\": true,\n" +
+                                "    \"DOB\": \"2020-07-11T07:33:02.833Z\",\n" +
+                                "    \"Address\": \"string\",\n" +
+                                "    \"Address2\": \"string\",\n" +
+                                "    \"City\": \"string\",\n" +
+                                "    \"State\": \"string\",\n" +
+                                "    \"Country\": \"string\",\n" +
+                                "    \"Origin\": \"string\",\n" +
+                                "    \"Height\": 0,\n" +
+                                "    \"Weight\": 0\n" +
+                                "  }";
+                        UserBean userBean = JSON.parseObject(s, UserBean.class);
+                        userBean.setId("1");
+                        userDao.insertUser(userBean);
+                    }
+                }).start();
                 break;
             case R.id.siv_contact:
-                readyGo(SelectCityActivity1.class);
+                DbManager.getInstance(mContext).openDb("niko");
+
+                new Thread(() -> {
+                    UserBean niko = DbManager.getInstance(mContext).getUserDao().getUserByIdSync("1");
+                    Log.e("niko",JSON.toJSONString(niko));
+
+                }).start();
                 break;
             case R.id.siv_modify_pwd:
                 if (isFirst) {
@@ -153,8 +192,8 @@ public class SettingActivity extends BaseActivity {
     private void logout() {
         if(mLogoutDialog==null) {
             mLogoutDialog = new CommonDialog.Builder()
-                    .setTitleText(R.string.seal_set_account_dialog_clear_cache_title)
-                    .setContentMessage(getString(R.string.seal_set_account_dialog_clear_cache_message))
+                    .setTitleText(R.string.dialog_logout_title)
+                    .setContentMessage(getString(R.string.dialog_logout_content))
                     .setDialogButtonClickListener(new CommonDialog.OnDialogButtonClickListener() {
                         @Override
                         public void onPositiveClick(View v, Bundle bundle) {

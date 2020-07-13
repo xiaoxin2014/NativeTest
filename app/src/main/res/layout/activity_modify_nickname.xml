@@ -12,9 +12,6 @@
         app:show_right_tv="true"
         app:title="@string/modify_nickname" />
 
-
-
-
     <androidx.appcompat.widget.AppCompatEditText
         android:id="@+id/et_nickname"
         style="@style/etPwdStyle"

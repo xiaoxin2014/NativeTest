@@ -4,6 +4,8 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.TextView;
 
 import com.example.nativetest.R;
 import com.example.nativetest.widget.TitleBar;
@@ -11,7 +13,6 @@ import com.example.nativetest.widget.TitleBar;
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
 import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class ModifyNicknameActivity extends BaseActivity {
     @BindView(R.id.title_bar)
@@ -24,6 +25,8 @@ public class ModifyNicknameActivity extends BaseActivity {
     AppCompatTextView mTvError;
     @BindView(R.id.tv_length)
     AppCompatTextView mTvLength;
+    private TextView mTvSubmit;
+    private int mType;
 
     @Override
     protected int getLayoutId() {
@@ -35,14 +38,14 @@ public class ModifyNicknameActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             initEt();
-            int type = bundle.getInt("type",0);
-            switch (type){
-                case 0:
+            mType = bundle.getInt("type", 0);
+            switch (mType) {
+                case SettingPersonInfoActivity.TYPE_NICKNAME:
                     String nickname = bundle.getString("nickname");
                     mEtNickname.setText(nickname);
                     mEtNickname.setHint(R.string.setting_your_nickname);
                     break;
-                case 1:
+                case SettingPersonInfoActivity.TYPE_SCHOOL:
                     String school = bundle.getString("school");
                     mEtNickname.setText(school);
                     mEtNickname.setHint(R.string.setting_your_school);
@@ -57,6 +60,10 @@ public class ModifyNicknameActivity extends BaseActivity {
     }
 
     private void initEt() {
+        mTvSubmit = mTitleBar.getTitleBarTvRight();
+        mTvSubmit.setOnClickListener(v -> {
+            finish();
+        });
         mEtNickname.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -71,8 +78,17 @@ public class ModifyNicknameActivity extends BaseActivity {
             @Override
             public void afterTextChanged(Editable s) {
                 String content = s.toString().trim();
-                mTvLength.setText(String.valueOf(10-content.length()));
-                mTitleBar.getTitleBarTvRight().setEnabled(!TextUtils.isEmpty(content));
+                mTvLength.setText(String.valueOf(10 - content.length()));
+                mTvSubmit.setEnabled(!TextUtils.isEmpty(content));
+                switch (mType){
+                    case SettingPersonInfoActivity.TYPE_NICKNAME:
+                        mTvTips.setVisibility(mTvSubmit.isEnabled()?View.GONE:View.VISIBLE);
+                        break;
+                    case SettingPersonInfoActivity.TYPE_SCHOOL:
+                        break;
+                    default:
+                        break;
+                }
             }
         });
     }

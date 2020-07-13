@@ -35,7 +35,7 @@ public class UserTask {
             protected LiveData<NetResponse<UserBean>> createCall() {
                 HashMap<String, Object> paramsMap = new HashMap<>();
                 RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return testService.getUserInfo(body);
+                return testService.getUserInfo("Bearer",body);
             }
         }.asLiveData();
     }

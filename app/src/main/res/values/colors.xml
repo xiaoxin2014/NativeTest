@@ -8,7 +8,12 @@
     <color name="line">#D9DBDF</color>
     <color name="color_red_text">#F30048</color>
     <color name="blackA">#0A0A0B</color>
+    <color name="blackB">#202129</color>
 
+
+<!--    <color name="com_ycuwq_datepicker_selectedTextColor">#33aaff</color>-->
+    <color name="com_ycuwq_datepicker_selectedTextColor">@color/color_black_text</color>
+    <color name="com_ycuwq_datepicker_divider">#cccccc</color>
 
 
     <!-- **************************rongyun************************** -->
@@ -50,6 +55,9 @@
     <color name="seal_new_friends_name_text">#353535</color>
     <color name="seal_new_friends_status_text">#999999</color>
 
+
+
+
     <!--contact-->
     <color name="seal_contact_content_bg">#0ff</color>
     <color name="seal_contact_rv_bg">#ebebeb</color>
@@ -75,7 +83,8 @@
     <color name="seal_update_name_text_color">#999999</color>
     <color name="seal_update_name_tips">#FF1612</color>
     <color name="seal_update_name_edit">#353535</color>
-    <color name="seal_dialog_select_picture_btn_text">#333333</color>
+    <color name="seal_dialog_select_picture_btn_text">@color/color_black_text</color>
+    <color name="seal_dialog_select_picture_btn_cancel">@color/common_dialog_content_text</color>
     <color name="seal_dialog_select_picture_divider">#dfdfdd</color>
     <color name="seal_spannel_color">#0099ff</color>
 

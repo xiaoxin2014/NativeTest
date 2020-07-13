@@ -1,5 +1,11 @@
 package com.example.nativetest.model.sc;
 
+import androidx.annotation.NonNull;
+import androidx.room.ColumnInfo;
+import androidx.room.Entity;
+import androidx.room.PrimaryKey;
+
+@Entity(tableName = "user")
 public class UserBean {
 
     /**
@@ -19,20 +25,47 @@ public class UserBean {
      * Weight : 0
      */
 
+    @PrimaryKey
+    @NonNull
+    private String id;
+
+    @ColumnInfo(name = "first_name")
     private String Firstname;
+    @ColumnInfo(name = "last_name")
     private String Lastname;
+    @ColumnInfo(name = "email")
     private String Email;
+    @ColumnInfo(name = "phone")
     private String Phone;
+    @ColumnInfo(name = "gender")
     private boolean Gender;
+    @ColumnInfo(name = "dob")
     private String DOB;
+    @ColumnInfo(name = "address")
     private String Address;
+    @ColumnInfo(name = "address2")
     private String Address2;
+    @ColumnInfo(name = "city")
     private String City;
+    @ColumnInfo(name = "state")
     private String State;
+    @ColumnInfo(name = "country")
     private String Country;
+    @ColumnInfo(name = "origin")
     private String Origin;
+    @ColumnInfo(name = "height")
     private int Height;
+    @ColumnInfo(name = "weight")
     private int Weight;
+
+    @NonNull
+    public String getId() {
+        return id;
+    }
+
+    public void setId(@NonNull String id) {
+        this.id = id;
+    }
 
     public String getFirstname() {
         return Firstname;

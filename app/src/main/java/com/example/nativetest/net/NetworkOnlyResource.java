@@ -40,7 +40,7 @@ public abstract class NetworkOnlyResource<ResultType,RequestType> {
             result.removeSource(apiResponse);
             if (response != null) {
                 if(response instanceof Result){
-                    int code = ((Result)response).code;
+                    int code = ((Result)response).RsCode;
                     if(code != NetConstant.REQUEST_SUCCESS_CODE){
                         result.setValue(Resource.error(code, null));
                         return;
@@ -80,7 +80,7 @@ public abstract class NetworkOnlyResource<ResultType,RequestType> {
     @WorkerThread
     private ResultType transformDefault(RequestType response){
         if(response instanceof Result){
-            Object result = ((Result) response).getResult();
+            Object result = ((Result) response).getRsData();
             if(result != null){
                 try {
                     return  (ResultType)result;
