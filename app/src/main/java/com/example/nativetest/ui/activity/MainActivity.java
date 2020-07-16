@@ -7,6 +7,7 @@ import com.example.nativetest.R;
 import com.example.nativetest.TestTabActivity;
 import com.example.nativetest.db.DbManager;
 import com.example.nativetest.ui.fragment.MainConversationListFragment;
+import com.example.nativetest.ui.fragment.MainFragment;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;
 import com.example.nativetest.widget.TabGroupView;
@@ -115,13 +116,15 @@ public class MainActivity extends BaseActivity {
                 // 当点击 tab 的后， 也要切换到正确的 fragment 页面
 //                int currentItem = vpFragmentContainer.getCurrentItem();
 //                if (currentItem != item.id) {
-                    // 切换布局
+//                     切换布局
 //                    vpFragmentContainer.setCurrentItem(item.id);
-                    // 如果是我的页面， 则隐藏红点
+//                     如果是我的页面， 则隐藏红点
 //                    if (item.id == Tab.ME.getValue()) {
 //                        ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.GONE);
 //                    }
 //                }
+                if(item.id == Tab.MY.getValue()){
+                }
             }
         });
 
@@ -138,6 +141,7 @@ public class MainActivity extends BaseActivity {
                 }else if(item.id == Tab.MY.getValue()){
                     readyGo(TestTabActivity.class);
                 }else {
+
                 }
             }
         });
@@ -158,7 +162,10 @@ public class MainActivity extends BaseActivity {
 //        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
 
 
-        addFragment(new MainConversationListFragment());
+//        addFragment(new MainConversationListFragment());
+        MainFragment mainFragment = new MainFragment();
+        addFragment(mainFragment);
+        changeFragment(mainFragment);
     }
 
     private void addFragment(Fragment fragment) {
@@ -170,10 +177,10 @@ public class MainActivity extends BaseActivity {
     }
 
     private void changeFragment(Fragment lastFragment) {
-//        FragmentTransaction fragmentTransaction = mSupportFragmentManager.beginTransaction();
+        FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
 //        fragmentTransaction.hide(mSelectFragment);
-//        fragmentTransaction.show(lastFragment);
-//        fragmentTransaction.commit();
+        fragmentTransaction.show(lastFragment);
+        fragmentTransaction.commit();
 //        mSelectFragment = lastFragment;
     }
 }

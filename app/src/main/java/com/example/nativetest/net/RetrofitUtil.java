@@ -1,8 +1,12 @@
 package com.example.nativetest.net;
 
+import android.util.Log;
+
+import com.alibaba.fastjson.JSONObject;
 import com.google.gson.Gson;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.MediaType;
 import okhttp3.RequestBody;
@@ -17,7 +21,35 @@ public class RetrofitUtil {
      */
     public static RequestBody createJsonRequest(HashMap<String, Object> paramsMap){
         Gson gson = new Gson();
-        String strEntity = gson.toJson(paramsMap);
-        return RequestBody.create(MEDIA_TYPE_JSON,strEntity);
+        String jsonStr = gson.toJson(paramsMap);
+        Log.e("retrofit RequestBody",jsonStr);
+
+        return RequestBody.create(MEDIA_TYPE_JSON,jsonStr);
     }
+
+    public static RequestBody getRequestBody(Object obj){
+        String jsonStr = JSONObject.toJSONString(obj);
+        RequestBody requestBody = RequestBody.create(MediaType.parse("Content-Type, application/json"), jsonStr);
+        Log.e("retrofit RequestBody",jsonStr);
+        return requestBody;
+    }
+
+    /**
+     * 转换为 form-data
+     *
+     * @param requestDataMap
+     * @return
+     */
+    public static Map<String, RequestBody> generateRequestBody(Map<String, String> requestDataMap) {
+        Map<String, RequestBody> requestBodyMap = new HashMap<>();
+        for (String key : requestDataMap.keySet()) {
+            RequestBody requestBody = RequestBody.create(MediaType.parse("multipart/form-data"),
+                    requestDataMap.get(key) == null ? "" : requestDataMap.get(key));
+            requestBodyMap.put(key, requestBody);
+        }
+        Log.e("retrofit RequestBody",JSONObject.toJSONString(requestDataMap));
+
+        return requestBodyMap;
+    }
+
 }

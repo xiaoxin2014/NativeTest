@@ -13,11 +13,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
 //    private LoadingDialog dialog;
     private Handler handler = new Handler();
+    private Unbinder unBinder;
 
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
@@ -33,6 +36,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         }
 
         View view = inflater.inflate(layoutResId, container, false);
+        unBinder = ButterKnife.bind(this, view);
         onCreateView();
         return view;
     }
@@ -221,7 +225,12 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
         super.onDestroy();
         //移除所有
         handler.removeCallbacksAndMessages(null);
+        if(unBinder!=null){
+            unBinder.unbind();
+        }
     }
+
+
 
 
     public void onCreateView() {

@@ -8,10 +8,15 @@ import android.os.Bundle;
 
 
 import com.example.nativetest.common.ErrorCode;
+import com.example.nativetest.common.LogTag;
+import com.example.nativetest.sp.UserConfigCache;
 import com.example.nativetest.ui.activity.MainActivity;
+import com.example.nativetest.utils.log.SLog;
 
 import androidx.multidex.MultiDexApplication;
 import io.rong.imkit.RongConfigurationManager;
+import io.rong.imkit.RongIM;
+import io.rong.imlib.RongIMClient;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
 
@@ -70,6 +75,27 @@ public class SealApp extends MultiDexApplication {
 
         // 监听 App 前后台变化
         observeAppInBackground();
+
+        String appKey = "cpj2xarlc1pon";
+        RongIM.init(appInstance, appKey);
+        RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
+            /**
+             * 连接状态返回回调
+             * @param connectionStatus 状态值 状态值详细可查看
+             * https://www.rongcloud.cn/docs/api/android/imlib/io/rong/imlib/RongIMClient.ConnectionStatusListener.ConnectionStatus.html
+             */
+            @Override
+            public void onChanged(ConnectionStatus connectionStatus) {
+                SLog.d(LogTag.IM, "ConnectionStatus onChanged = " + connectionStatus.getMessage());
+                if (connectionStatus.equals(ConnectionStatus.KICKED_OFFLINE_BY_OTHER_CLIENT)) {
+                    //被其他提出时，需要返回登录界面
+//                    kickedOffline.postValue(true);
+                } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
+                    //TODO token 错误时，重新登录
+                }
+            }
+        });
+
     }
 
     public static SealApp getApplication() {

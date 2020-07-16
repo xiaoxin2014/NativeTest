@@ -1,30 +1,30 @@
-package com.example.nativetest.net;
+package com.example.nativetest.net.token;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 
-
 import com.example.nativetest.common.NetConstant;
+import com.example.nativetest.net.ScUrl;
 
 import static android.content.Context.MODE_PRIVATE;
 
 
-public class HttpClientManager {
+public class TokenHttpClientManager {
     private static final String TAG = "HttpClientManager";
-    private static HttpClientManager instance;
+    private static TokenHttpClientManager instance;
     private Context context;
-    private RetrofitClient client;
+    private TokenRetrofitClient client;
 
-    private HttpClientManager(Context context) {
+    private TokenHttpClientManager(Context context) {
         this.context = context;
-        client = new RetrofitClient(context, ScUrl.BASE_URL);
+        client = new TokenRetrofitClient(context, ScUrl.TOKEN_BASE_URL);
     }
 
-    public static HttpClientManager getInstance(Context context) {
+    public static TokenHttpClientManager getInstance(Context context) {
         if (instance == null) {
-            synchronized (HttpClientManager.class) {
+            synchronized (TokenHttpClientManager.class) {
                 if (instance == null) {
-                    instance = new HttpClientManager(context);
+                    instance = new TokenHttpClientManager(context);
                 }
             }
         }
@@ -32,7 +32,7 @@ public class HttpClientManager {
         return instance;
     }
 
-    public RetrofitClient getClient() {
+    public TokenRetrofitClient getClient() {
         return client;
     }
 

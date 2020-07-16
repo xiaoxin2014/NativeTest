@@ -1,12 +1,12 @@
-package com.example.nativetest.net;
+package com.example.nativetest.net.token;
 
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
-import android.util.Log;
 
 import com.example.nativetest.common.NetConstant;
-import com.example.nativetest.net.token.ScTokenInterceptor;
+import com.example.nativetest.net.LiveDataCallAdapterFactory;
+import com.example.nativetest.net.ScInterceptor;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
@@ -24,17 +24,16 @@ import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 import static android.content.Context.MODE_PRIVATE;
 
-public class RetrofitClient {
+public class TokenRetrofitClient {
     private Context mContext;
     private Retrofit mRetrofit;
 
-    public RetrofitClient(Context context, String baseUrl) {
+    public TokenRetrofitClient(Context context, String baseUrl) {
         mContext = context;
 
 //        OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()

@@ -7,19 +7,12 @@ import android.view.View;
 import com.alibaba.fastjson.JSON;
 import com.example.nativetest.db.DbManager;
 import com.example.nativetest.db.dao.UserDao;
-import com.example.nativetest.model.Resource;
-import com.example.nativetest.model.Status;
 import com.example.nativetest.R;
-import com.example.nativetest.model.sc.UserBean;
-import com.example.nativetest.viewmodel.LoginViewModel;
+import com.example.nativetest.model.sc.UserInfo;
 import com.example.nativetest.widget.dialog.ClearCacheDialog;
 import com.example.nativetest.widget.dialog.CommonDialog;
 import com.example.nativetest.widget.SettingItemView;
 
-import org.json.JSONObject;
-
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -42,7 +35,6 @@ public class SettingActivity extends BaseActivity {
     SettingItemView mSivLogout;
 
     boolean isFirst = true;
-    private LoginViewModel mLoginViewModel;
     private CommonDialog mLogoutDialog;
     private CommonDialog mClearCacheDialog;
 
@@ -53,57 +45,9 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
-        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-        mLoginViewModel.getLoginResult().observe(this, new Observer<Resource<String>>() {
-            @Override
-            public void onChanged(Resource<String> resource) {
-                if (resource.status == Status.SUCCESS) {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast("Success");
-//                            toMain(resource.data);
-                        }
-                    });
-
-                } else if (resource.status == Status.LOADING) {
-                    showLoadingDialog("loading");
-                } else {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(resource.message);
-                        }
-                    });
-                }
-            }
-        });
-
-        mLoginViewModel.getGetUserResult().observe(this, new Observer<Resource<UserBean>>() {
-            @Override
-            public void onChanged(Resource<UserBean> resource) {
-                if (resource.status == Status.SUCCESS) {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast("Success");
-//                            toMain(resource.data);
-                        }
-                    });
-
-                } else if (resource.status == Status.LOADING) {
-                    showLoadingDialog("loading");
-                } else {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(resource.message);
-                        }
-                    });
-                }
-            }
-        });
     }
+
+
 
     @OnClick({R.id.siv_info, R.id.siv_notification, R.id.siv_hobby, R.id.siv_contact, R.id.siv_modify_pwd, R.id.siv_company, R.id.siv_clear, R.id.siv_logout})
     public void onViewClicked(View view) {
@@ -137,7 +81,7 @@ public class SettingActivity extends BaseActivity {
                                 "    \"Height\": 0,\n" +
                                 "    \"Weight\": 0\n" +
                                 "  }";
-                        UserBean userBean = JSON.parseObject(s, UserBean.class);
+                        UserInfo userBean = JSON.parseObject(s, UserInfo.class);
                         userBean.setId("1");
                         userDao.insertUser(userBean);
                     }
@@ -147,7 +91,7 @@ public class SettingActivity extends BaseActivity {
                 DbManager.getInstance(mContext).openDb("niko");
 
                 new Thread(() -> {
-                    UserBean niko = DbManager.getInstance(mContext).getUserDao().getUserByIdSync("1");
+                    UserInfo niko = DbManager.getInstance(mContext).getUserDao().getUserByIdSync("1");
                     Log.e("niko",JSON.toJSONString(niko));
 
                 }).start();
@@ -189,6 +133,7 @@ public class SettingActivity extends BaseActivity {
         mClearCacheDialog.show(getSupportFragmentManager(), "clear_cache");
     }
 
+
     private void logout() {
         if(mLogoutDialog==null) {
             mLogoutDialog = new CommonDialog.Builder()
@@ -198,7 +143,7 @@ public class SettingActivity extends BaseActivity {
                         @Override
                         public void onPositiveClick(View v, Bundle bundle) {
 //                            mLoginViewModel.login("", "13305938755", "qq123456");
-                            mLoginViewModel.getUserInfo();
+//                            mLoginViewModel.getUserInfo();
                         }
 
                         @Override

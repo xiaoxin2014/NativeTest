@@ -10,5 +10,10 @@ public class NetConstant {
     public final static String API_SP_KEY_NET_HEADER_AUTH = "header_auth";
 
 //    public final static int REQUEST_SUCCESS_CODE = 200;
-    public final static int REQUEST_SUCCESS_CODE = 0;
+    public final static int REQUEST_SUCCESS_CODE = 3;
+
+
+
+    public final static String JSON = "Content-Type:application/json";
+    public final static String FORM = "Content-Type:multipart/form-data";
 }

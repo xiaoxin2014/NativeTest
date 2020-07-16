@@ -17,6 +17,11 @@ public class Result<T> {
     public NetResponse.RsDetailBean RsDetail;
     public String RsNote;
 
+
+    public String error;//适配解析问题
+
+
+
     public T getRsData() {
         return RsData;
     }

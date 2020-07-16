@@ -5,9 +5,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
 
+import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
 import com.example.nativetest.event.CitySelectEvent;
 import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.SettingItemView;
 import com.example.nativetest.widget.dialog.SelectGenderBottomDialog;
 import com.example.nativetest.widget.dialog.SelectPictureBottomDialog;
@@ -16,6 +18,7 @@ import com.example.nativetest.widget.wheel.date.DatePickerDialogFragment;
 import java.text.SimpleDateFormat;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.eventbus.EventBus;
@@ -40,6 +43,7 @@ public class SettingPersonInfoActivity extends BaseActivity {
     SettingItemView mSivSchool;
     @BindView(R.id.siv_age)
     SettingItemView mSivAge;
+    private UserInfoViewModel mUserInfoViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -49,6 +53,23 @@ public class SettingPersonInfoActivity extends BaseActivity {
     @Override
     protected void initView() {
         EventBus.getDefault().register(this);
+        initViewModel();
+    }
+
+
+    private void initViewModel() {
+        mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+        mUserInfoViewModel.getProfileResult().observe(this,profileInfoResult -> {
+            if (profileInfoResult.RsCode == 3){
+                ProfileUtils.sProfileInfo = profileInfoResult.RsData;
+            }
+        });
+
+        mUserInfoViewModel.getUpdateProfile().observe(this,profileInfoResult -> {
+            if (profileInfoResult.RsCode == 3){
+
+            }
+        });
     }
 
     @OnClick({R.id.siv_img, R.id.siv_nickname, R.id.siv_gender, R.id.siv_city, R.id.siv_own, R.id.siv_school, R.id.siv_age})

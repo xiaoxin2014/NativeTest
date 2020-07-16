@@ -8,6 +8,9 @@ import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.utils.log.SLog;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import androidx.annotation.MainThread;
 import androidx.annotation.NonNull;
 import androidx.annotation.WorkerThread;
@@ -41,6 +44,16 @@ public abstract class NetworkOnlyResource<ResultType,RequestType> {
             if (response != null) {
                 if(response instanceof Result){
                     int code = ((Result)response).RsCode;
+                    if(code != NetConstant.REQUEST_SUCCESS_CODE){
+                        result.setValue(Resource.error(code, null));
+                        return;
+                    } else {
+                        // do nothing
+                    }
+                }
+
+                if(response instanceof List && ((List) response).get(0) instanceof Result){
+                    int code = ((Result)((List) response).get(0)).RsCode;
                     if(code != NetConstant.REQUEST_SUCCESS_CODE){
                         result.setValue(Resource.error(code, null));
                         return;

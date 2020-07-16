@@ -216,6 +216,14 @@ public class PhotoUtils {
         cropIntent.putExtra("outputY", 200);
         cropIntent.putExtra("return-data", false);
         cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
+
+//        cropIntent.putExtra("outputX", 200);
+//        cropIntent.putExtra("outputY", 200);
+//        cropIntent.putExtra("aspectX", 1);
+//        cropIntent.putExtra("aspectY", 1);
+//        cropIntent.putExtra("return-data", true);
+//        cropIntent.putExtra("circleCrop", "true");
+//        cropIntent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
         Uri cropuri = buildLocalFileUri();
         cropIntent.putExtra(MediaStore.EXTRA_OUTPUT, cropuri);
         if (!isIntentAvailable(activity, cropIntent)) {
