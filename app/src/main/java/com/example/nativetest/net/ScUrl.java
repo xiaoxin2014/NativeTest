@@ -4,7 +4,6 @@ public class ScUrl {
     public static final String BASE_URL = "https://ttapi.alilusions.com/";
 
 
-    public static final String USER_INFO_GET = "api/ScUser/UserInfoGet";
     public static final String USER_GET_SMS = "api/ScSMS/ping";
     public static final String USER_VERIFY_CODE = "api/ScSMS/VerifyCode";
     public static final String PROFILE_GET = "api/ScUser/ProfileGet";

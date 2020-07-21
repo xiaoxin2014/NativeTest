@@ -8,10 +8,12 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.example.nativetest.R;
+import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.TitleBar;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 
 public class ModifyNicknameActivity extends BaseActivity {
@@ -28,6 +30,9 @@ public class ModifyNicknameActivity extends BaseActivity {
     private TextView mTvSubmit;
     private int mType;
 
+    private UserInfoViewModel mUserInfoViewModel;
+
+
     @Override
     protected int getLayoutId() {
         return R.layout.activity_modify_nickname;
@@ -38,6 +43,7 @@ public class ModifyNicknameActivity extends BaseActivity {
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             initEt();
+            initViewModel();
             mType = bundle.getInt("type", 0);
             switch (mType) {
                 case SettingPersonInfoActivity.TYPE_NICKNAME:
@@ -59,10 +65,20 @@ public class ModifyNicknameActivity extends BaseActivity {
         }
     }
 
+    private void initViewModel() {
+        mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+
+        mUserInfoViewModel.getUpdateProfile().observe(this, profileInfoResult -> {
+            if (profileInfoResult.RsCode == 3) {
+                finish();
+            }
+        });
+    }
+
     private void initEt() {
         mTvSubmit = mTitleBar.getTitleBarTvRight();
         mTvSubmit.setOnClickListener(v -> {
-            finish();
+            updateProfile();
         });
         mEtNickname.addTextChangedListener(new TextWatcher() {
             @Override
@@ -80,9 +96,9 @@ public class ModifyNicknameActivity extends BaseActivity {
                 String content = s.toString().trim();
                 mTvLength.setText(String.valueOf(10 - content.length()));
                 mTvSubmit.setEnabled(!TextUtils.isEmpty(content));
-                switch (mType){
+                switch (mType) {
                     case SettingPersonInfoActivity.TYPE_NICKNAME:
-                        mTvTips.setVisibility(mTvSubmit.isEnabled()?View.GONE:View.VISIBLE);
+                        mTvTips.setVisibility(mTvSubmit.isEnabled() ? View.GONE : View.VISIBLE);
                         break;
                     case SettingPersonInfoActivity.TYPE_SCHOOL:
                         break;
@@ -91,6 +107,17 @@ public class ModifyNicknameActivity extends BaseActivity {
                 }
             }
         });
+    }
+
+    private void updateProfile() {
+        switch (mType) {
+            case SettingPersonInfoActivity.TYPE_NICKNAME:
+                mUserInfoViewModel.updateProfile(1,"Name",mEtNickname.getText().toString().trim());
+                break;
+            case SettingPersonInfoActivity.TYPE_SCHOOL:
+                mUserInfoViewModel.updateProfile(2,"School",mEtNickname.getText().toString().trim());
+                break;
+        }
     }
 
 }

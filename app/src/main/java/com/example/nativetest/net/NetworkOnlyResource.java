@@ -52,15 +52,15 @@ public abstract class NetworkOnlyResource<ResultType,RequestType> {
                     }
                 }
 
-                if(response instanceof List && ((List) response).get(0) instanceof Result){
-                    int code = ((Result)((List) response).get(0)).RsCode;
-                    if(code != NetConstant.REQUEST_SUCCESS_CODE){
-                        result.setValue(Resource.error(code, null));
-                        return;
-                    } else {
-                        // do nothing
-                    }
-                }
+//                if(response instanceof List && ((List) response).get(0) instanceof Result){
+//                    int code = ((Result)((List) response).get(0)).RsCode;
+//                    if(code != NetConstant.REQUEST_SUCCESS_CODE){
+//                        result.setValue(Resource.error(code, null));
+//                        return;
+//                    } else {
+//                        // do nothing
+//                    }
+//                }
                 threadManager.runOnWorkThread(() -> {
                     ResultType resultType = transformRequestType(response); //自定义的
                     if(resultType == null){

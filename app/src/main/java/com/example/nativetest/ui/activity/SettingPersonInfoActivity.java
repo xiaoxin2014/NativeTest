@@ -7,7 +7,11 @@ import android.view.View;
 
 import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
+import com.example.nativetest.db.model.ProfileInfo;
 import com.example.nativetest.event.CitySelectEvent;
+import com.example.nativetest.model.Resource;
+import com.example.nativetest.model.Result;
+import com.example.nativetest.model.Status;
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.SettingItemView;
@@ -18,6 +22,7 @@ import com.example.nativetest.widget.wheel.date.DatePickerDialogFragment;
 import java.text.SimpleDateFormat;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -59,24 +64,64 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     private void initViewModel() {
         mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
-        mUserInfoViewModel.getProfileResult().observe(this,profileInfoResult -> {
-            if (profileInfoResult.RsCode == 3){
-                ProfileUtils.sProfileInfo = profileInfoResult.RsData;
+        mUserInfoViewModel.getProfileResult().observe(this, new Observer<Resource<ProfileInfo>>() {
+            @Override
+            public void onChanged(Resource<ProfileInfo> resource) {
+                if (resource.status == Status.SUCCESS) {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast("获取用户信息成功");
+                        }
+                    });
+
+                } else if (resource.status == Status.LOADING) {
+                    showLoadingDialog("");
+                } else {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(resource.message);
+                        }
+                    });
+                }
             }
         });
+//        {
+//            if (profileInfoResult.RsCode == 3){
+//                ProfileUtils.sProfileInfo = profileInfoResult.RsData;
+//                //刷新界面
+//                refreshUI();
+//            }
+//        });
 
         mUserInfoViewModel.getUpdateProfile().observe(this,profileInfoResult -> {
             if (profileInfoResult.RsCode == 3){
+                //刷新界面
+                refreshUI();
 
             }
         });
+
+    }
+
+    private void refreshUI() {
+        ProfileInfo profileInfo = ProfileUtils.sProfileInfo;
+        mSivNickname.setValue(profileInfo.getHead().getName());
+        mSivGender.setValue(profileInfo.getHead().isGender()?R.string.man:R.string.women);
+        mSivCity.setValue(profileInfo.getLocation());
+        mSivOwn.setValue(profileInfo.getBio());
+        mSivSchool.setValue(profileInfo.getSchool());
+        mSivAge.setValue(profileInfo.getDOB());
     }
 
     @OnClick({R.id.siv_img, R.id.siv_nickname, R.id.siv_gender, R.id.siv_city, R.id.siv_own, R.id.siv_school, R.id.siv_age})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.siv_img:
-                showSelectPictureDialog();
+                mUserInfoViewModel.getProfile();
+
+//                showSelectPictureDialog();
                 break;
             case R.id.siv_nickname:
                 Bundle bundleNickname = new Bundle();

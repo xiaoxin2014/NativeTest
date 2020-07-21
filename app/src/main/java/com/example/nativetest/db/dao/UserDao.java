@@ -10,12 +10,12 @@ import androidx.room.Query;
 
 @Dao
 public interface UserDao {
-    @Query("SELECT * FROM UserInfo WHERE id=:id")
+    @Query("SELECT * FROM user WHERE id=:id")
     LiveData<UserInfo> getUserById(String id);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertUser(UserInfo userInfo);
 
-    @Query("SELECT * FROM UserInfo WHERE id=:id")
+    @Query("SELECT * FROM user WHERE id=:id")
     UserInfo getUserByIdSync(String id);
 }

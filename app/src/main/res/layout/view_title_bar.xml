@@ -54,6 +54,7 @@
         android:layout_marginRight="@dimen/dp_12"/>
 
     <View
+        android:id="@+id/line"
         android:layout_alignParentBottom="true"
         android:background="#EBEBEB"
         android:layout_width="match_parent"

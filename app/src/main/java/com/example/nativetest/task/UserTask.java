@@ -16,6 +16,7 @@ import com.example.nativetest.net.ScInterceptor;
 import com.example.nativetest.net.service.ScUserService;
 import com.example.nativetest.net.service.TokenService;
 import com.example.nativetest.net.token.TokenHttpClientManager;
+import com.example.nativetest.utils.log.SLog;
 
 import java.util.HashMap;
 import java.util.List;
@@ -23,6 +24,7 @@ import java.util.Map;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.LiveData;
+import androidx.lifecycle.MediatorLiveData;
 import okhttp3.RequestBody;
 
 public class UserTask {
@@ -38,19 +40,7 @@ public class UserTask {
     }
 
 
-    public LiveData<Resource<UserInfo>> getUserInfo(){
-        return new NetworkOnlyResource<UserInfo, NetResponse<UserInfo>>() {
-            @NonNull
-            @Override
-            protected LiveData<NetResponse<UserInfo>> createCall() {
-                HashMap<String, Object> paramsMap = new HashMap<>();
-//                paramsMap.put("phone", "13305938755");
-//                paramsMap.put("password", "niko9999");
-                RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
-                return scUserService.getUserInfo(body);
-            }
-        }.asLiveData();
-    }
+
 
 
     /**
@@ -69,8 +59,6 @@ public class UserTask {
             @Override
             protected LiveData<Result<String>> createCall() {
                 HashMap<String, Object> paramsMap = new HashMap<>();
-//                paramsMap.put("phone", "13305938755");
-//                paramsMap.put("password", "niko9999");
                 RequestBody body = RetrofitUtil.createJsonRequest(paramsMap);
                 return scUserService.login(body);
             }
@@ -118,7 +106,7 @@ public class UserTask {
         return tokenService.connectToken(stringRequestBodyMap);
     }
 
-    public LiveData<List<Result>> getSms(){
+    public LiveData<Result> getSms(){
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("PhoneNumber", "13305938755");
         paramsMap.put("PhoneCountry", "86");
@@ -126,7 +114,7 @@ public class UserTask {
         return scUserService.getSms(body);
     }
 
-    public LiveData<List<Result>> smsVerify(){
+    public LiveData<Result> smsVerify(){
         HashMap<String, Object> paramsMap = new HashMap<>();
         paramsMap.put("PhoneNumber", "13305938755");
         paramsMap.put("PhoneCountry", "86");
@@ -149,48 +137,23 @@ public class UserTask {
     }
 
 
-   /* public LiveData<Resource<List<Result<ProfileInfo>>>> getProfile(){
-        MediatorLiveData<Resource<List<Result<ProfileInfo>>>> result = new MediatorLiveData<>();
+    public LiveData<Resource<ProfileInfo>> getProfile(){
+        MediatorLiveData<Resource<Result<ProfileInfo>>> result = new MediatorLiveData<>();
         result.setValue(Resource.loading(null));
-        LiveData<Resource<List<Result<ProfileInfo>>>> profile = new NetworkOnlyResource<List<Result<ProfileInfo>>, List<Result<ProfileInfo>>>() {
+        LiveData<Resource<ProfileInfo>> profile = new NetworkOnlyResource<ProfileInfo, Result<ProfileInfo>>() {
+
             @NonNull
             @Override
-            protected LiveData<List<Result<ProfileInfo>>> createCall() {
+            protected LiveData<Result<ProfileInfo>> createCall() {
                 return scUserService.getProfileInfo();
             }
         }.asLiveData();
-        try{
-            ProfileInfo rsData = profile.getValue().data.get(0).RsData;
-            ProfileUtils.sProfileInfo = rsData;
-            SLog.d("niko SingleSourceMapLiveData", "暂存profile");
-
-        }catch (Exception e){
-
-        }
-
-        SLog.d("niko SingleSourceMapLiveData", "5");
-
-        result.addSource(profile,listResource -> {
-            SLog.d("niko SingleSourceMapLiveData", "6");
-
-            if (listResource.status == Status.SUCCESS) {
-                result.removeSource(profile);
-                List<Result<ProfileInfo>> list = listResource.data;
-                result.postValue(Resource.success(listResource.data));
-            }
-        });
-
-        return result;
-    }*/
-
-    public LiveData<List<Result<ProfileInfo>>> getProfile(){
-        return scUserService.getProfileInfo();
+        return profile;
     }
 
 
-    public LiveData<List<Result<Boolean>>> updateProfile(int type,String key,String value){
-//        ProfileInfo profileInfo = ProfileUtils.sProfileInfo;
-//        profileInfo.getHead().setName("niko");
+
+    public LiveData<Result<Boolean>> updateProfile(int type,String key,String value){
         return scUserService.updateProfileInfo(RetrofitUtil.createJsonRequest(ProfileUtils.getUpdateInfo(type,key,value)));
     }
 }

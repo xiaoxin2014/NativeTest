@@ -19,10 +19,10 @@ import androidx.lifecycle.LiveData;
 public class LoginViewModel extends AndroidViewModel {
     private UserTask userTask;
     private SingleSourceLiveData<Resource<String>> loginResult = new SingleSourceLiveData<>();
-    private SingleSourceLiveData<Resource<UserInfo>> getUserResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getTokenResult = new SingleSourceLiveData<>();
-    private SingleSourceMapLiveData<List<Result>, Result> getSmsResult = new SingleSourceMapLiveData<>(input -> input.get(0));
-    private SingleSourceMapLiveData<List<Result>, Result> verifyResult = new SingleSourceMapLiveData<>(input -> input.get(0));
+//    private SingleSourceMapLiveData<List<Result>, Result> getSmsResult = new SingleSourceMapLiveData<>(input -> input.get(0));
+    private SingleSourceLiveData<Result> getSmsResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Result> verifyResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getUserTokenResult = new SingleSourceLiveData<>();
 //    private SingleSourceMapLiveData<Resource<List<Result<ProfileInfo>>>, Resource<Result<ProfileInfo>>> profileResult;
 
@@ -65,13 +65,7 @@ public class LoginViewModel extends AndroidViewModel {
         return loginResult;
     }
 
-    public void getUserInfo() {
-        getUserResult.setSource(userTask.getUserInfo());
-    }
 
-    public SingleSourceLiveData<Resource<UserInfo>> getGetUserResult() {
-        return getUserResult;
-    }
 
     public void getToken() {
         getTokenResult.setSource(userTask.getAccessToken());
@@ -81,7 +75,7 @@ public class LoginViewModel extends AndroidViewModel {
         return getTokenResult;
     }
 
-    public SingleSourceMapLiveData<List<Result>, Result> getGetSmsResult() {
+    public SingleSourceLiveData<Result> getGetSmsResult() {
         return getSmsResult;
     }
 
@@ -93,7 +87,7 @@ public class LoginViewModel extends AndroidViewModel {
         verifyResult.setSource(userTask.smsVerify());
     }
 
-    public SingleSourceMapLiveData<List<Result>, Result> getVerifyResult() {
+    public SingleSourceLiveData<Result> getVerifyResult() {
         return verifyResult;
     }
 

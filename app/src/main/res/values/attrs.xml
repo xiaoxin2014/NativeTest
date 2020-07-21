@@ -68,6 +68,7 @@
     <declare-styleable name="TitleBar">
         <attr name="title" format="string"/>
         <attr name="show_right_tv" format="boolean"/>
+        <attr name="show_line" format="boolean"/>
     </declare-styleable>
 
 

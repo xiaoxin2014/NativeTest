@@ -57,17 +57,7 @@ public class MainFragment extends BaseFragment {
     @Override
     protected void onInitView(Bundle savedInstanceState, Intent intent) {
         mUserConfigCache = new UserConfigCache(SealApp.getApplication());
-//        if(!TextUtils.isEmpty(mUserConfigCache.getSpUserToken())){
-//            mTvIsLogin.setText("已登陆");
-//            mBtnAccessToken.setEnabled(false);
-//            mBtnLogin.setEnabled(false);
-//            mBtnSendSms.setEnabled(false);
-//            mBtnUserToken.setEnabled(false);
-//            mBtnVertifySms.setEnabled(false);
-//            ScInterceptor.Authorization = "Bearer "+mUserConfigCache.getSpUserToken();
-//        }
         mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
-
         mLoginViewModel.getGetTokenResult().observe(this, new Observer<TokenBean>() {
             @Override
             public void onChanged(TokenBean tokenBean) {

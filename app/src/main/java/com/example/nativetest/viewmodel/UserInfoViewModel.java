@@ -3,22 +3,24 @@ package com.example.nativetest.viewmodel;
 import android.app.Application;
 
 import com.example.nativetest.db.model.ProfileInfo;
+import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.task.UserTask;
+import com.example.nativetest.utils.SingleSourceLiveData;
 import com.example.nativetest.utils.SingleSourceMapLiveData;
 
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.LiveData;
 
 public class UserInfoViewModel extends AndroidViewModel {
 
     private UserTask userTask;
 
-
-    private SingleSourceMapLiveData<List<Result<ProfileInfo>>,Result<ProfileInfo>> profileResult =  new SingleSourceMapLiveData<>(input -> input.get(0));
-    private SingleSourceMapLiveData<List<Result<Boolean>>,Result<Boolean>> updateProfileResult =  new SingleSourceMapLiveData<>(input -> input.get(0));
+    private SingleSourceLiveData<Resource<ProfileInfo>> profileResult =  new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Result<Boolean>> updateProfileResult =  new SingleSourceLiveData<>();
 
 
     public UserInfoViewModel(@NonNull Application application) {
@@ -27,8 +29,7 @@ public class UserInfoViewModel extends AndroidViewModel {
 //        requestUserInfo(imManager.getCurrentId());
     }
 
-    public SingleSourceMapLiveData<List<Result<ProfileInfo>>, Result<ProfileInfo>> getProfileResult() {
-//    public SingleSourceMapLiveData<Resource<List<Result<ProfileInfo>>>, Resource<Result<ProfileInfo>>> getProfileResult() {
+    public SingleSourceLiveData<Resource<ProfileInfo>> getProfileResult() {
         return profileResult;
     }
 
@@ -37,8 +38,7 @@ public class UserInfoViewModel extends AndroidViewModel {
     }
 
 
-    public SingleSourceMapLiveData<List<Result<Boolean>>, Result<Boolean>> getUpdateProfile() {
-//    public SingleSourceMapLiveData<Resource<List<Result<ProfileInfo>>>, Resource<Result<ProfileInfo>>> getProfileResult() {
+    public SingleSourceLiveData<Result<Boolean>> getUpdateProfile() {
         return updateProfileResult;
     }
 

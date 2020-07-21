@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <LinearLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+
+        <com.example.nativetest.widget.TitleBar
+            android:id="@+id/title_bar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:show_line="false" />
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:layout_marginRight="@dimen/dp_15">
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_avatar"
+                android:layout_width="@dimen/dp_48"
+                android:layout_height="@dimen/dp_48"
+                android:background="@drawable/img_setting_contact" />
+
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/dp_10"
+                android:layout_marginTop="@dimen/dp_4"
+                android:layout_toRightOf="@+id/iv_avatar"
+                android:orientation="vertical">
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:id="@+id/tv_name"
+                    style="@style/tv16BlackStyle"
+                    android:text="郭莹莹"
+                    android:textStyle="bold" />
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    style="@style/tv16BlackStyle"
+                    android:text="升级VIP有以下两种方式"
+                    android:textSize="@dimen/sp_11" />
+
+            </LinearLayout>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:id="@+id/iv_is_vip"
+                android:layout_width="@dimen/dp_25"
+                android:layout_height="@dimen/dp_12"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="@dimen/dp_4"
+                android:background="@drawable/img_vip_non_member" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:padding="@dimen/dp_10"
+            android:layout_marginTop="@dimen/dp_20"
+            android:layout_marginRight="@dimen/dp_15"
+            android:layout_marginLeft="@dimen/dp_15"
+            android:background="@drawable/vip_bg"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            
+            
+            <androidx.appcompat.widget.AppCompatTextView
+                android:id="@+id/tv_1"
+                android:text="VIP特权"
+                style="@style/tv16WhiteStyle"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_below="@+id/tv_1"
+                android:layout_marginTop="@dimen/dp_20"
+                android:id="@+id/iv_1"
+                android:background="@drawable/img_vip_top_1"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"/>
+
+            <androidx.appcompat.widget.AppCompatImageView
+                android:layout_below="@+id/iv_1"
+                android:layout_marginTop="@dimen/dp_40"
+                android:id="@+id/iv_2"
+                android:background="@drawable/img_vip_top_2"
+                android:layout_width="@dimen/dp_24"
+                android:layout_height="@dimen/dp_24"/>
+            
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</ScrollView>

@@ -49,6 +49,7 @@ public class TitleBar extends RelativeLayout {
         mTitleBarTvTitle = (TextView) findViewById(R.id.tvTitle);
         mTitleBarTvRight = (TextView) findViewById(R.id.tvRight);
         mRlContainer = (RelativeLayout) findViewById(R.id.rlContainer);
+        View line = findViewById(R.id.line);
 
 
         if (attrs != null) {
@@ -60,6 +61,12 @@ public class TitleBar extends RelativeLayout {
                 boolean b = array.getBoolean(R.styleable.TitleBar_show_right_tv, false);
                 mTitleBarTvRight.setVisibility(b?VISIBLE:GONE);
             }
+
+            if(array.hasValue(R.styleable.TitleBar_show_line)){
+                boolean b = array.getBoolean(R.styleable.TitleBar_show_line, true);
+                line.setVisibility(b?VISIBLE:GONE);
+            }
+
 //            if (array.hasValue(R.styleable.TitleBar_right_icon)) {
 //                mTitleBarIvRight.setImageResource(array.getResourceId(R.styleable.TitleBar_right_icon,0));
 //            }
