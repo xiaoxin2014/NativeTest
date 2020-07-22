@@ -7,11 +7,14 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
+import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.TitleBar;
 
 import androidx.appcompat.widget.AppCompatEditText;
 import androidx.appcompat.widget.AppCompatTextView;
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -23,6 +26,7 @@ public class PersonalProfileActivity extends BaseActivity {
     @BindView(R.id.et_content)
     AppCompatEditText mEtContent;
     private TextView mTvSubmit;
+    private UserInfoViewModel mUserInfoViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -31,9 +35,10 @@ public class PersonalProfileActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initViewModel();
         mTvSubmit = mTitleBar.getTitleBarTvRight();
         mTvSubmit.setOnClickListener(v -> {
-            finish();
+            mUserInfoViewModel.updateProfile(2,"Bio",mEtContent.getText().toString().trim());
         });
         mEtContent.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,5 +65,15 @@ public class PersonalProfileActivity extends BaseActivity {
             mEtContent.setText(content);
 
         }
+    }
+
+    private void initViewModel() {
+        mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+        mUserInfoViewModel.getUpdateProfile().observe(this, profileInfoResult -> {
+            if (profileInfoResult.RsCode == 3) {
+                ProfileUtils.sProfileInfo.setBio(mEtContent.getText().toString().trim());
+                finish();
+            }
+        });
     }
 }

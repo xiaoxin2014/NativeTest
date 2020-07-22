@@ -76,7 +76,7 @@ public class SealApp extends MultiDexApplication {
         // 监听 App 前后台变化
         observeAppInBackground();
 
-        String appKey = "cpj2xarlc1pon";
+        String appKey = "x18ywvqfx5h3c";
         RongIM.init(appInstance, appKey);
         RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             /**

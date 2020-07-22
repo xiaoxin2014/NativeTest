@@ -5,14 +5,20 @@ import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
+import com.example.nativetest.ProfileUtils;
+import com.example.nativetest.VipActivity;
 import com.example.nativetest.db.DbManager;
 import com.example.nativetest.db.dao.UserDao;
 import com.example.nativetest.R;
+import com.example.nativetest.model.Status;
 import com.example.nativetest.model.sc.UserInfo;
+import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.dialog.ClearCacheDialog;
 import com.example.nativetest.widget.dialog.CommonDialog;
 import com.example.nativetest.widget.SettingItemView;
 
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -34,9 +40,10 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.siv_logout)
     SettingItemView mSivLogout;
 
-    boolean isFirst = true;
+    private boolean hasSetPassword;
     private CommonDialog mLogoutDialog;
     private CommonDialog mClearCacheDialog;
+    private UserInfoViewModel mUserInfoViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -45,6 +52,62 @@ public class SettingActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
+        mUserInfoViewModel.getProfileResult().observe(this, resource -> {
+            if (resource.status == Status.SUCCESS) {
+                dismissLoadingDialog(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProfileUtils.sProfileInfo = resource.data;
+                        showToast("获取用户信息成功");
+                    }
+                });
+
+            } else if (resource.status == Status.LOADING) {
+//                    showLoadingDialog("");
+            } else {
+//                    dismissLoadingDialog(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            showToast(resource.message);
+//                        }
+//                    });
+            }
+        });
+
+        mUserInfoViewModel.getHasSetPasswordResult().observe(this,result->{
+            hasSetPassword = result.RsData;
+            if (result.RsData){
+                ToastUtils.showToast("设置过密码");
+            }else {
+                ToastUtils.showToast("未设置过密码");
+            }
+        });
+
+        mUserInfoViewModel.getLogoutResult().observe(this,resource -> {
+            if (resource.status == Status.SUCCESS) {
+                dismissLoadingDialog(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast("退出成功");
+                    }
+                });
+
+            } else if (resource.status == Status.LOADING) {
+                    showLoadingDialog("");
+            } else {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(resource.message);
+                        }
+                    });
+            }
+        });
+
+
+        mUserInfoViewModel.getProfile();
+        mUserInfoViewModel.hasSetPassword();
     }
 
 
@@ -88,18 +151,18 @@ public class SettingActivity extends BaseActivity {
                 }).start();
                 break;
             case R.id.siv_contact:
-                DbManager.getInstance(mContext).openDb("niko");
-
-                new Thread(() -> {
-                    UserInfo niko = DbManager.getInstance(mContext).getUserDao().getUserByIdSync("1");
-                    Log.e("niko",JSON.toJSONString(niko));
-
-                }).start();
+//                DbManager.getInstance(mContext).openDb("niko");
+//
+//                new Thread(() -> {
+//                    UserInfo niko = DbManager.getInstance(mContext).getUserDao().getUserByIdSync("1");
+//                    Log.e("niko",JSON.toJSONString(niko));
+//
+//                }).start();
+                readyGo(VipActivity.class);
                 break;
             case R.id.siv_modify_pwd:
-                if (isFirst) {
+                if (hasSetPassword) {
                     readyGo(SettingPwdActivity.class);
-                    isFirst = false;
                 } else {
                     readyGo(ModifyPwdActivity.class);
                 }
@@ -143,7 +206,7 @@ public class SettingActivity extends BaseActivity {
                         @Override
                         public void onPositiveClick(View v, Bundle bundle) {
 //                            mLoginViewModel.login("", "13305938755", "qq123456");
-//                            mLoginViewModel.getUserInfo();
+                            mUserInfoViewModel.logout();
                         }
 
                         @Override

@@ -3,11 +3,13 @@ package com.example.nativetest.ui.activity;
 import android.view.Gravity;
 import android.view.View;
 
+import com.example.nativetest.ConversationListActivity;
 import com.example.nativetest.R;
 import com.example.nativetest.TestTabActivity;
 import com.example.nativetest.db.DbManager;
 import com.example.nativetest.ui.fragment.MainConversationListFragment;
 import com.example.nativetest.ui.fragment.MainFragment;
+import com.example.nativetest.ui.fragment.TwoFragment;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;
 import com.example.nativetest.widget.TabGroupView;
@@ -25,7 +27,9 @@ import io.rong.imkit.fragment.ConversationListFragment;
 public class MainActivity extends BaseActivity {
     @BindView(R.id.tg_bottom_tabs)
     MainBottomTabGroupView mTgBottomTabs;
-
+    private MainFragment mMainFragment;
+    private TwoFragment mTwoFragment;
+    private Fragment mSelectFragment;
 
 
     /**
@@ -123,7 +127,12 @@ public class MainActivity extends BaseActivity {
 //                        ((MainBottomTabItem) tabGroupView.getView(Tab.ME.getValue())).setRedVisibility(View.GONE);
 //                    }
 //                }
-                if(item.id == Tab.MY.getValue()){
+                if(item.id == Tab.TWO_THREE.getValue()){
+                    changeFragment(mTwoFragment);
+                }else if(item.id == Tab.MY.getValue()){
+                    changeFragment(mMainFragment);
+                }else if(item.id == Tab.CHAT.getValue()){
+//                    readyGo(ConversationListActivity.class);
                 }
             }
         });
@@ -163,9 +172,12 @@ public class MainActivity extends BaseActivity {
 
 
 //        addFragment(new MainConversationListFragment());
-        MainFragment mainFragment = new MainFragment();
-        addFragment(mainFragment);
-        changeFragment(mainFragment);
+        mMainFragment = new MainFragment();
+        addFragment(mMainFragment);
+        mTwoFragment = new TwoFragment();
+        addFragment(mTwoFragment);
+        mSelectFragment = mMainFragment;
+        changeFragment(mMainFragment);
     }
 
     private void addFragment(Fragment fragment) {
@@ -178,9 +190,9 @@ public class MainActivity extends BaseActivity {
 
     private void changeFragment(Fragment lastFragment) {
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//        fragmentTransaction.hide(mSelectFragment);
+        fragmentTransaction.hide(mSelectFragment);
         fragmentTransaction.show(lastFragment);
         fragmentTransaction.commit();
-//        mSelectFragment = lastFragment;
+        mSelectFragment = lastFragment;
     }
 }

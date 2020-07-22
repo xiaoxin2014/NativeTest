@@ -8,6 +8,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.widget.LoadingDialog;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,7 +19,7 @@ import butterknife.Unbinder;
 
 public abstract class BaseFragment extends Fragment implements View.OnClickListener {
 
-//    private LoadingDialog dialog;
+    private LoadingDialog dialog;
     private Handler handler = new Handler();
     private Unbinder unBinder;
 
@@ -159,65 +160,65 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
      *
      * @param msg
      */
-//    public void showLoadingDialog(String msg) {
-//        FragmentManager fragmentManager = getFragmentManager();
-//        if (fragmentManager == null) return;
-//        if (dialog == null || (dialog.getDialog() != null && !dialog.getDialog().isShowing())) {
-//            dialogCreateTime = System.currentTimeMillis();
-//            dialog = new LoadingDialog();
-//            dialog.setLoadingInformation(msg);
-//            dialog.show(fragmentManager, "loading_dialog");
-//        }
-//    }
+    public void showLoadingDialog(String msg) {
+        FragmentManager fragmentManager = getFragmentManager();
+        if (fragmentManager == null) return;
+        if (dialog == null || (dialog.getDialog() != null && !dialog.getDialog().isShowing())) {
+            dialogCreateTime = System.currentTimeMillis();
+            dialog = new LoadingDialog();
+            dialog.setLoadingInformation(msg);
+            dialog.show(fragmentManager, "loading_dialog");
+        }
+    }
 
     /**
      * 显示加载 dialog
      *
      * @param msgResId
      */
-//    public void showLoadingDialog(int msgResId) {
-//        showLoadingDialog(getString(msgResId));
-//    }
+    public void showLoadingDialog(int msgResId) {
+        showLoadingDialog(getString(msgResId));
+    }
 
     /**
      * 取消加载dialog
      */
-//    public void dismissLoadingDialog() {
-//        dismissLoadingDialog(null);
-//    }
+    public void dismissLoadingDialog() {
+        dismissLoadingDialog(null);
+    }
 
     /**
      * 取消加载dialog. 因为延迟， 所以要延时完成之后， 再在 runnable 中执行逻辑.
      * <p>
      * 延迟关闭时间是因为接口有时返回太快。
      */
-//    public void dismissLoadingDialog(Runnable runnable) {
-//        if (dialog != null && dialog.getDialog() != null && dialog.getDialog().isShowing()) {
-//            // 由于可能请求接口太快，则导致加载页面一闪问题， 所有再次做判断，
-//            // 如果时间太快（小于 500ms）， 则会延时 1s，再做关闭。
-//            if (System.currentTimeMillis() - dialogCreateTime < 500) {
-//                handler.postDelayed(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        if (runnable != null) {
-//                            runnable.run();
-//                        }
-//                        if(dialog != null){
-//                            dialog.dismissAllowingStateLoss();
-//                            dialog = null;
-//                        }
-//                    }
-//                }, 1000);
-//
-//            } else {
-//                dialog.dismiss();
-//                dialog = null;
-//                if (runnable != null) {
-//                    runnable.run();
-//                }
-//            }
-//        }
-//    }
+    public void dismissLoadingDialog(Runnable runnable) {
+        if (dialog != null && dialog.getDialog() != null && dialog.getDialog().isShowing()) {
+            // 由于可能请求接口太快，则导致加载页面一闪问题， 所有再次做判断，
+            // 如果时间太快（小于 500ms）， 则会延时 1s，再做关闭。
+            if (System.currentTimeMillis() - dialogCreateTime < 500) {
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        if (runnable != null) {
+                            runnable.run();
+                        }
+                        if(dialog != null){
+                            dialog.dismissAllowingStateLoss();
+                            dialog = null;
+                        }
+                    }
+                }, 1000);
+
+            } else {
+                dialog.dismiss();
+                dialog = null;
+                if (runnable != null) {
+                    runnable.run();
+                }
+            }
+        }
+    }
 
 
     @Override

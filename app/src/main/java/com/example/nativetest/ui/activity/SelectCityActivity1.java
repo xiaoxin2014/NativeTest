@@ -33,6 +33,7 @@ public class SelectCityActivity1 extends BaseActivity {
     @Override
     protected void initView() {
         EventBus.getDefault().register(this);
+
         String json = FileUtils.getJson(this, "data.json");
         List<AreaBean> areaBeans = JSONObject.parseArray(json, AreaBean.class);
         SelectCountryRvAdpter selectCountryRvAdpter = new SelectCountryRvAdpter(mContext, areaBeans);

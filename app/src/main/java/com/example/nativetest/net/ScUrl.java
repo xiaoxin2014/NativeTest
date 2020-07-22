@@ -8,12 +8,16 @@ public class ScUrl {
     public static final String USER_VERIFY_CODE = "api/ScSMS/VerifyCode";
     public static final String PROFILE_GET = "api/ScUser/ProfileGet";
     public static final String PROFILE_UPDATE = "api/ScUser/ProfileUpdate";
+    public static final String LOG_OUT = "/api/ScUser/Logout";
 
+
+
+    public static final String HAS_SET_PASSWORD = "/api/ScUser/HasSetPassword";
 
     public static final String USER_INFO_UPDATE = "api/ScUser/UserInfoUpdate";
 
-    public static final String LOGOUT = "api/ScUser/Logout";
 
+    public static final String GET_IM_TOKEN = "/api/ScIM/GetImUserToken";
 
 
 

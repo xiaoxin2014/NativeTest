@@ -9,6 +9,18 @@
     <color name="color_red_text">#F30048</color>
     <color name="blackA">#0A0A0B</color>
     <color name="blackB">#202129</color>
+    <color name="white80">#CCFFFFFF</color>
+    <color name="graya">#65666C</color>
+
+
+
+    <color name="nickname1">#031B89</color>
+    <color name="nickname2">#573C89</color>
+    <color name="nickname3">#018480</color>
+    <color name="nickname4">#002D40</color>
+    <color name="nickname5">#FB7A8E</color>
+    <color name="nickname6">#FFD427</color>
+    <color name="nickname7">#F17E12</color>
 
 
 <!--    <color name="com_ycuwq_datepicker_selectedTextColor">#33aaff</color>-->

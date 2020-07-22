@@ -21,6 +21,8 @@ public class UserInfoViewModel extends AndroidViewModel {
 
     private SingleSourceLiveData<Resource<ProfileInfo>> profileResult =  new SingleSourceLiveData<>();
     private SingleSourceLiveData<Result<Boolean>> updateProfileResult =  new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Result<Boolean>> hasSetPasswordResult =  new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Boolean>> logoutResult =  new SingleSourceLiveData<>();
 
 
     public UserInfoViewModel(@NonNull Application application) {
@@ -42,7 +44,29 @@ public class UserInfoViewModel extends AndroidViewModel {
         return updateProfileResult;
     }
 
-    public void updateProfile(int type, String key, String value) {
+    public void updateProfile(int type, String key, Object value) {
         updateProfileResult.setSource(userTask.updateProfile(type, key, value));
     }
+
+    public SingleSourceLiveData<Result<Boolean>> getHasSetPasswordResult() {
+        return hasSetPasswordResult;
+    }
+
+    public void hasSetPassword() {
+        hasSetPasswordResult.setSource(userTask.hasSetPassword());
+    }
+
+    public SingleSourceLiveData<Resource<Boolean>> getLogoutResult() {
+        return logoutResult;
+    }
+
+    public void logout() {
+        logoutResult.setSource(userTask.logout());
+    }
+
+
+
+
+
+
 }

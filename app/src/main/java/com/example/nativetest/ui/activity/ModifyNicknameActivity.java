@@ -7,6 +7,7 @@ import android.text.TextWatcher;
 import android.view.View;
 import android.widget.TextView;
 
+import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.TitleBar;
@@ -67,9 +68,16 @@ public class ModifyNicknameActivity extends BaseActivity {
 
     private void initViewModel() {
         mUserInfoViewModel = ViewModelProviders.of(this).get(UserInfoViewModel.class);
-
         mUserInfoViewModel.getUpdateProfile().observe(this, profileInfoResult -> {
             if (profileInfoResult.RsCode == 3) {
+                switch (mType) {
+                    case SettingPersonInfoActivity.TYPE_NICKNAME:
+                        ProfileUtils.sProfileInfo.getHead().setName(mEtNickname.getText().toString().trim());
+                        break;
+                    case SettingPersonInfoActivity.TYPE_SCHOOL:
+                        ProfileUtils.sProfileInfo.setSchool(mEtNickname.getText().toString().trim());
+                        break;
+                }
                 finish();
             }
         });

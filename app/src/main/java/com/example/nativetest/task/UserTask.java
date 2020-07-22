@@ -1,18 +1,24 @@
 package com.example.nativetest.task;
 
 import android.content.Context;
+import android.net.Uri;
+import android.text.TextUtils;
 
 import com.example.nativetest.ProfileUtils;
+import com.example.nativetest.db.dao.UserDao;
 import com.example.nativetest.db.model.ProfileInfo;
+import com.example.nativetest.model.IMTokenBean;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.model.sc.NetResponse;
 import com.example.nativetest.model.sc.TokenBean;
 import com.example.nativetest.model.sc.UserInfo;
 import com.example.nativetest.net.HttpClientManager;
+import com.example.nativetest.net.NetworkBoundResource;
 import com.example.nativetest.net.NetworkOnlyResource;
 import com.example.nativetest.net.RetrofitUtil;
 import com.example.nativetest.net.ScInterceptor;
+import com.example.nativetest.net.service.ScIMService;
 import com.example.nativetest.net.service.ScUserService;
 import com.example.nativetest.net.service.TokenService;
 import com.example.nativetest.net.token.TokenHttpClientManager;
@@ -31,12 +37,14 @@ public class UserTask {
 //    private FileManager fileManager;
     private ScUserService scUserService;
     private TokenService tokenService;
+    private ScIMService scIMService;
     private Context context;
 
     public UserTask(Context context) {
         this.context = context.getApplicationContext();
         scUserService = HttpClientManager.getInstance(context).getClient().createService(ScUserService.class);
         tokenService = TokenHttpClientManager.getInstance(context).getClient().createService(TokenService.class);
+        scIMService = HttpClientManager.getInstance(context).getClient().createService(ScIMService.class);
     }
 
 
@@ -138,8 +146,8 @@ public class UserTask {
 
 
     public LiveData<Resource<ProfileInfo>> getProfile(){
-        MediatorLiveData<Resource<Result<ProfileInfo>>> result = new MediatorLiveData<>();
-        result.setValue(Resource.loading(null));
+//        MediatorLiveData<Resource<Result<ProfileInfo>>> result = new MediatorLiveData<>();
+//        result.setValue(Resource.loading(null));
         LiveData<Resource<ProfileInfo>> profile = new NetworkOnlyResource<ProfileInfo, Result<ProfileInfo>>() {
 
             @NonNull
@@ -150,10 +158,76 @@ public class UserTask {
         }.asLiveData();
         return profile;
     }
+ /*   *//**
+     * 获取用户信息
+     *
+     * @return
+     *//*
+    public LiveData<Resource<ProfileInfo>> getProfile() {
+        return new NetworkBoundResource<ProfileInfo, Result<ProfileInfo>>() {
+            @Override
+            protected void saveCallResult(@NonNull Result<ProfileInfo> item) {
+                ProfileUtils.sProfileInfo = item.getRsData();
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<ProfileInfo> loadFromDb() {
+                MediatorLiveData<ProfileInfo> profileInfoMediatorLiveData = new MediatorLiveData<>();
+                profileInfoMediatorLiveData.setValue(ProfileUtils.sProfileInfo);
+                return profileInfoMediatorLiveData;
+//                UserDao userDao = dbManager.getUserDao();
+//                if (userDao != null) {
+//                    return userDao.getUserById(userId);
+//                } else {
+//                    return new MediatorLiveData<>();
+//                }
+            }
+
+            @NonNull
+            @Override
+            protected LiveData<Result<ProfileInfo>> createCall() {
+                return scUserService.getProfileInfo();
+            }
+        }.asLiveData();
+    }
+*/
 
 
-
-    public LiveData<Result<Boolean>> updateProfile(int type,String key,String value){
+    public LiveData<Result<Boolean>> updateProfile(int type,String key,Object value){
         return scUserService.updateProfileInfo(RetrofitUtil.createJsonRequest(ProfileUtils.getUpdateInfo(type,key,value)));
     }
+
+    public LiveData<Result<Boolean>> hasSetPassword(){
+        return scUserService.hasSetPassword();
+    }
+
+    public LiveData<Resource<Boolean>> logout(){
+
+        return new NetworkOnlyResource<Boolean, Result<Boolean>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Boolean>> createCall() {
+                return scUserService.logout();
+            }
+        }.asLiveData();
+    }
+
+
+    public LiveData<Resource<String>> getImToken(){
+
+        return new NetworkOnlyResource<String, Result<String>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<String>> createCall() {
+                return scIMService.getIMToken();
+            }
+        }.asLiveData();
+    }
+
+
+
+
 }

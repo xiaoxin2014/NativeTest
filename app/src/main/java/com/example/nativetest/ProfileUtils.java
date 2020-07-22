@@ -7,9 +7,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class ProfileUtils {
-    public static ProfileInfo sProfileInfo = new ProfileInfo();
+    public static ProfileInfo sProfileInfo;
 
-    public static HashMap<String,Object> getUpdateInfo(int type,String key,String value){
+    public static HashMap<String,Object> getUpdateInfo(int type,String key,Object value){
 //        {
 //            "Skip": 0,
 //                "Take": 0,

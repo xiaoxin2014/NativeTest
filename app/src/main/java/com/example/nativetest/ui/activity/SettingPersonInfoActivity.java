@@ -71,6 +71,8 @@ public class SettingPersonInfoActivity extends BaseActivity {
                     dismissLoadingDialog(new Runnable() {
                         @Override
                         public void run() {
+                            ProfileUtils.sProfileInfo = resource.data;
+                            refreshUI();
                             showToast("获取用户信息成功");
                         }
                     });
@@ -98,15 +100,19 @@ public class SettingPersonInfoActivity extends BaseActivity {
         mUserInfoViewModel.getUpdateProfile().observe(this,profileInfoResult -> {
             if (profileInfoResult.RsCode == 3){
                 //刷新界面
+                ToastUtils.showToast("刷新界面");
                 refreshUI();
 
             }
         });
 
+        mUserInfoViewModel.getProfile();
+
     }
 
     private void refreshUI() {
         ProfileInfo profileInfo = ProfileUtils.sProfileInfo;
+        if(profileInfo==null){return;}
         mSivNickname.setValue(profileInfo.getHead().getName());
         mSivGender.setValue(profileInfo.getHead().isGender()?R.string.man:R.string.women);
         mSivCity.setValue(profileInfo.getLocation());
@@ -119,9 +125,7 @@ public class SettingPersonInfoActivity extends BaseActivity {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.siv_img:
-                mUserInfoViewModel.getProfile();
-
-//                showSelectPictureDialog();
+                showSelectPictureDialog();
                 break;
             case R.id.siv_nickname:
                 Bundle bundleNickname = new Bundle();
@@ -166,18 +170,12 @@ public class SettingPersonInfoActivity extends BaseActivity {
     private void showSelectGenderDialog() {
         SelectGenderBottomDialog.Builder builder = new SelectGenderBottomDialog.Builder();
         builder.setOnSelectPictureListener(isMan -> {
-            ToastUtils.showToast(""+isMan);
+            mUserInfoViewModel.updateProfile(3,"Gender",isMan);
         });
         SelectGenderBottomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "select_picture_dialog");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-
-
-        super.onActivityResult(requestCode, resultCode, data);
-    }
 
     /**
      * 选择图片的 dialog
@@ -212,5 +210,6 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     public void onEventMainThread(CitySelectEvent event) {
         mSivCity.setValue(event.getCity());
+        mUserInfoViewModel.updateProfile(2,"Location",event.getCityCode());
     }
 }

@@ -39,4 +39,17 @@ public interface ScUserService {
     @Headers(NetConstant.JSON)
     LiveData<Result<Boolean>> updateProfileInfo(@Body RequestBody body);
 
+
+    @POST(ScUrl.HAS_SET_PASSWORD)
+    @Headers(NetConstant.JSON)
+    LiveData<Result<Boolean>> hasSetPassword();
+
+
+    @POST(ScUrl.LOG_OUT)
+    @Headers(NetConstant.JSON)
+    LiveData<Result<Boolean>> logout();
+
+
+
+
 }

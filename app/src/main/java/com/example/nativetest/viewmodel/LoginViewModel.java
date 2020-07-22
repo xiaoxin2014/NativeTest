@@ -2,6 +2,7 @@ package com.example.nativetest.viewmodel;
 
 import android.app.Application;
 
+import com.example.nativetest.model.IMTokenBean;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.model.sc.TokenBean;
@@ -20,11 +21,10 @@ public class LoginViewModel extends AndroidViewModel {
     private UserTask userTask;
     private SingleSourceLiveData<Resource<String>> loginResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getTokenResult = new SingleSourceLiveData<>();
-//    private SingleSourceMapLiveData<List<Result>, Result> getSmsResult = new SingleSourceMapLiveData<>(input -> input.get(0));
     private SingleSourceLiveData<Result> getSmsResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Result> verifyResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getUserTokenResult = new SingleSourceLiveData<>();
-//    private SingleSourceMapLiveData<Resource<List<Result<ProfileInfo>>>, Resource<Result<ProfileInfo>>> profileResult;
+    private SingleSourceLiveData<Resource<String>> getImTokenResult = new SingleSourceLiveData<>();
 
 
     public LoginViewModel(@NonNull Application application) {
@@ -99,5 +99,13 @@ public class LoginViewModel extends AndroidViewModel {
         return getUserTokenResult;
     }
 
+
+    public void getImToken(){
+        getImTokenResult.setSource(userTask.getImToken());
+    }
+
+    public SingleSourceLiveData<Resource<String>> getGetImTokenResult(){
+       return getImTokenResult;
+    }
 
 }

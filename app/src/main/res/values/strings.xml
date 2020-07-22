@@ -27,6 +27,18 @@
     <string name="common_confirm">确定</string>
     <string name="common_clear">清理</string>
 
+
+    <string name="nickname1">群青</string>
+    <string name="nickname2">紫色</string>
+    <string name="nickname3">绿色</string>
+    <string name="nickname4">墨绿</string>
+    <string name="nickname5">粉色</string>
+    <string name="nickname6">黄色</string>
+    <string name="nickname7">橙色</string>
+
+
+
+
     <string name="dialog_logout_title">退出登录</string>
     <string name="dialog_logout_content">退出登录历史数据并不会被删除，下次登录并不会受到影响。</string>
     <string name="seal_dialog_select_picture_take_picture">拍照</string>

@@ -142,4 +142,12 @@
     </declare-styleable>
 
     <!--datepicker-->
+
+
+    <!--设置-->
+    <declare-styleable name="VipItemView">
+        <attr name="vip_left_src" format="reference" />
+        <attr name="vip_content" format="string" />
+        <attr name="vip_select" format="boolean" />
+    </declare-styleable>
 </resources>
