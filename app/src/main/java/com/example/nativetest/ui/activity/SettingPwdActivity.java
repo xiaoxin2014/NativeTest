@@ -7,11 +7,15 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
+import com.example.nativetest.model.Status;
 import com.example.nativetest.ui.activity.BaseActivity;
 import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.viewmodel.LoginViewModel;
 import com.example.nativetest.widget.TitleBar;
 
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 
 public class SettingPwdActivity extends BaseActivity {
@@ -26,6 +30,7 @@ public class SettingPwdActivity extends BaseActivity {
     private TextView mTvSubmit;
     private boolean pwdPass;
     private boolean pwdConfirm;
+    private LoginViewModel mLoginViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -34,6 +39,7 @@ public class SettingPwdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initViewModel();
         mTvSubmit = mTitleBar.getTitleBarTvRight();
         mTvSubmit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -41,8 +47,7 @@ public class SettingPwdActivity extends BaseActivity {
                 String pwd = mEtPwd.getText().toString();
                 String confirm = mEtConfirm.getText().toString();
                 if(pwd.equals(confirm)){
-                    ToastUtils.showToast(R.string.success);
-                    finish();
+                    mLoginViewModel.setPw(mEtConfirm.getText().toString());
                 }else {
                     mTvTips.setVisibility(View.VISIBLE);
                 }
@@ -83,5 +88,30 @@ public class SettingPwdActivity extends BaseActivity {
             }
         });
 
+    }
+
+    private void initViewModel() {
+        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mLoginViewModel.getSetPwResult().observe(this,resource -> {
+            if (resource.status == Status.SUCCESS) {
+                dismissLoadingDialog(new Runnable() {
+                    @Override
+                    public void run() {
+                        ProfileUtils.hasSetPw  = true;
+                        finish();
+                    }
+                });
+
+            } else if (resource.status == Status.LOADING) {
+                showLoadingDialog("");
+            } else {
+                dismissLoadingDialog(new Runnable() {
+                    @Override
+                    public void run() {
+                        showToast(resource.message);
+                    }
+                });
+            }
+        });
     }
 }

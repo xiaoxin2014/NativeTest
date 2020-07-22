@@ -227,6 +227,40 @@ public class UserTask {
         }.asLiveData();
     }
 
+    public LiveData<Resource<Boolean>> changePw(String oldPw,String newPw){
+
+        return new NetworkOnlyResource<Boolean, Result<Boolean>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Boolean>> createCall() {
+                HashMap<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("OldPassword", oldPw);
+                paramsMap.put("NewPassword", newPw);
+                RequestBody requestBody = RetrofitUtil.createJsonRequest(paramsMap);
+                return tokenService.changePwByOldPw(requestBody);
+            }
+        }.asLiveData();
+    }
+
+    public LiveData<Resource<Boolean>> setPw(String newPw){
+
+        return new NetworkOnlyResource<Boolean, Result<Boolean>>() {
+
+            @NonNull
+            @Override
+            protected LiveData<Result<Boolean>> createCall() {
+                HashMap<String, Object> paramsMap = new HashMap<>();
+                paramsMap.put("PhoneNumber", "13305938755");
+                paramsMap.put("PhoneCountry", "86");
+                paramsMap.put("VCode", "9999");
+                paramsMap.put("Password", newPw);
+                RequestBody requestBody = RetrofitUtil.createJsonRequest(paramsMap);
+                return tokenService.changePwByCode(requestBody);
+            }
+        }.asLiveData();
+    }
+
 
 
 

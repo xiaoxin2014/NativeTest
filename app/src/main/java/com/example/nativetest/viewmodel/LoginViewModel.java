@@ -2,70 +2,32 @@ package com.example.nativetest.viewmodel;
 
 import android.app.Application;
 
-import com.example.nativetest.model.IMTokenBean;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.model.sc.TokenBean;
-import com.example.nativetest.model.sc.UserInfo;
 import com.example.nativetest.task.UserTask;
 import com.example.nativetest.utils.SingleSourceLiveData;
-import com.example.nativetest.utils.SingleSourceMapLiveData;
-
-import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
-import androidx.lifecycle.LiveData;
 
 public class LoginViewModel extends AndroidViewModel {
     private UserTask userTask;
-    private SingleSourceLiveData<Resource<String>> loginResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getTokenResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Result> getSmsResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Result> verifyResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<TokenBean> getUserTokenResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<String>> getImTokenResult = new SingleSourceLiveData<>();
 
+    private SingleSourceLiveData<Resource<Boolean>> changePwResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<Boolean>> setPwResult = new SingleSourceLiveData<>();
+
 
     public LoginViewModel(@NonNull Application application) {
         super(application);
 
         userTask = new UserTask(application);
-
-//        profileResult = new SingleSourceMapLiveData<>(input -> {
-//
-//            SLog.d("niko SingleSourceMapLiveData", "1");
-//            if (input.status == Status.LOADING) {
-//                return Resource.loading(null);
-//            }
-//            SLog.d("niko SingleSourceMapLiveData", "2");
-//
-//            if (input.status == Status.ERROR) {
-//                return Resource.error(input.code, null);
-//            }
-//            SLog.d("niko SingleSourceMapLiveData", "3");
-//
-//            if (input.data == null || input.data.size() == 0) {
-//                return new Resource<>(input.status, null, input.code);
-//            }
-//            SLog.d("niko SingleSourceMapLiveData", "4");
-//
-//            List<Result<ProfileInfo>> data = input.data;
-//            return new Resource<>(Status.SUCCESS, data.get(0), input.code);
-//        });
     }
-
-    public void login(String region, String phone, String pwd) {
-        loginResult.setSource(userTask.login(region, phone, pwd));
-        //TODO 示例代码，当需要转换类型时参考
-        //loginResultNoResource.setSource(userTask.login(region, phone, pwd));
-    }
-
-    public LiveData<Resource<String>> getLoginResult() {
-        return loginResult;
-    }
-
-
 
     public void getToken() {
         getTokenResult.setSource(userTask.getAccessToken());
@@ -100,12 +62,28 @@ public class LoginViewModel extends AndroidViewModel {
     }
 
 
-    public void getImToken(){
+    public void getImToken() {
         getImTokenResult.setSource(userTask.getImToken());
     }
 
-    public SingleSourceLiveData<Resource<String>> getGetImTokenResult(){
-       return getImTokenResult;
+    public SingleSourceLiveData<Resource<String>> getGetImTokenResult() {
+        return getImTokenResult;
+    }
+
+    public void changePw(String oldPw,String newPw){
+        changePwResult.setSource(userTask.changePw(oldPw,newPw));
+    }
+
+    public SingleSourceLiveData<Resource<Boolean>> getChangePwResult() {
+        return changePwResult;
+    }
+
+    public void setPw(String newPw){
+        setPwResult.setSource(userTask.setPw(newPw));
+    }
+
+    public SingleSourceLiveData<Resource<Boolean>> getSetPwResult() {
+        return setPwResult;
     }
 
 }

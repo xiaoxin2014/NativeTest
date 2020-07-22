@@ -8,6 +8,7 @@ import java.util.Map;
 
 public class ProfileUtils {
     public static ProfileInfo sProfileInfo;
+    public static boolean hasSetPw;
 
     public static HashMap<String,Object> getUpdateInfo(int type,String key,Object value){
 //        {

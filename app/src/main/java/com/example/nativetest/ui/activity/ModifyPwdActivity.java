@@ -8,9 +8,13 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
+import com.example.nativetest.model.Status;
+import com.example.nativetest.viewmodel.LoginViewModel;
 import com.example.nativetest.widget.TitleBar;
 
+import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 
@@ -29,6 +33,7 @@ public class ModifyPwdActivity extends BaseActivity {
     TextView mTvTips;
     private TextView mTvSubmit;
     private boolean oldPass,newPass,confirmPass;
+    private LoginViewModel mLoginViewModel;
 
     @Override
     protected int getLayoutId() {
@@ -38,15 +43,41 @@ public class ModifyPwdActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        initViewModel();
         mTvSubmit = mTitleBar.getTitleBarTvRight();
         mTvSubmit.setOnClickListener(v -> {
             if(mEtConfirmPwd.getText().toString().trim().equals(mEtPwd.getText().toString().trim())) {
-                finish();
+                mLoginViewModel.changePw(mEtOldPwd.getText().toString().trim(),mEtConfirmPwd.getText().toString().trim());
             }else {
                 mTvTips.setVisibility(View.VISIBLE);
             }
         });
         initEt();
+
+    }
+
+    private void initViewModel() {
+        mLoginViewModel = ViewModelProviders.of(this).get(LoginViewModel.class);
+        mLoginViewModel.getChangePwResult().observe(this,resource -> {
+            if (resource.status == Status.SUCCESS) {
+                dismissLoadingDialog(new Runnable() {
+                    @Override
+                    public void run() {
+                        finish();
+                    }
+                });
+
+            } else if (resource.status == Status.LOADING) {
+                    showLoadingDialog("");
+            } else {
+                    dismissLoadingDialog(new Runnable() {
+                        @Override
+                        public void run() {
+                            showToast(resource.message);
+                        }
+                    });
+            }
+        });
     }
 
     private void initEt() {

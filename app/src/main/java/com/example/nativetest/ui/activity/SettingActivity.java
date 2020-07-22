@@ -40,7 +40,6 @@ public class SettingActivity extends BaseActivity {
     @BindView(R.id.siv_logout)
     SettingItemView mSivLogout;
 
-    private boolean hasSetPassword;
     private CommonDialog mLogoutDialog;
     private CommonDialog mClearCacheDialog;
     private UserInfoViewModel mUserInfoViewModel;
@@ -76,7 +75,7 @@ public class SettingActivity extends BaseActivity {
         });
 
         mUserInfoViewModel.getHasSetPasswordResult().observe(this,result->{
-            hasSetPassword = result.RsData;
+            ProfileUtils.hasSetPw = result.RsData;
             if (result.RsData){
                 ToastUtils.showToast("设置过密码");
             }else {
@@ -161,7 +160,7 @@ public class SettingActivity extends BaseActivity {
                 readyGo(VipActivity.class);
                 break;
             case R.id.siv_modify_pwd:
-                if (hasSetPassword) {
+                if (!ProfileUtils.hasSetPw) {
                     readyGo(SettingPwdActivity.class);
                 } else {
                     readyGo(ModifyPwdActivity.class);

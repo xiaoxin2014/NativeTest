@@ -25,4 +25,6 @@ public class ScUrl {
     //获取token相关
     public static final String TOKEN_BASE_URL = "https://ttid.alilusions.com/";
     public static final String CONNECT_TOKEN = "connect/token";
+    public static final String CHANGE_PW_BY_CODE = "api/MemberApi/ChangePWbyCode";
+    public static final String CHANGE_PW_BY_OLD_PW = "api/MemberApi/ChangePWbyOldPW";
 }
