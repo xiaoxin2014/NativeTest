@@ -38,7 +38,7 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
         View view = inflater.inflate(layoutResId, container, false);
         unBinder = ButterKnife.bind(this, view);
-        onCreateView();
+        onCreateView(view);
         return view;
     }
 
@@ -234,8 +234,25 @@ public abstract class BaseFragment extends Fragment implements View.OnClickListe
 
 
 
-    public void onCreateView() {
+    public void onCreateView(View view) {
 
+    }
+
+    public void readyGo(Class<?> clazz, Bundle bundle) {
+        if (clazz != null) {
+            Intent intent = new Intent(getContext(), clazz);
+            if (null != bundle) {
+                intent.putExtras(bundle);
+            }
+            startActivity(intent);
+        }
+    }
+
+    /**
+     * startActivity
+     */
+    public void readyGo(Class<?> clazz) {
+        readyGo(clazz, null);
     }
 
 }

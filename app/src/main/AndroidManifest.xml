@@ -85,7 +85,6 @@
         <activity android:name=".ui.activity.SelectCityActivity1" />
         <activity android:name=".ui.activity.SelectCityActivity2" />
         <activity android:name=".ui.activity.SelectCityActivity3" />
-        <activity android:name=".TestTabActivity" />
         <activity android:name=".ui.activity.ModifyNicknameActivity" />
         <activity android:name=".ui.activity.PersonalProfileActivity" />
         <activity android:name=".VipActivity" />
@@ -108,6 +107,7 @@
                     android:scheme="rong" />
             </intent-filter>
         </activity>
+        <activity android:name=".ui.activity.ContactsActivity" />
 
         <provider
             android:name="androidx.core.content.FileProvider"

@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical">
 
 <!--    <include layout="@layout/main_layout_title" />-->
@@ -20,16 +21,27 @@
 
 
 
-    <View
+
+
+    <FrameLayout
+        android:id="@+id/fl_order_layout"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
-        android:background="@color/common_divider"
-        />
+        android:layout_height="wrap_content"
+        android:foreground="@drawable/dim"
+        android:layout_gravity="bottom"
+        tools:foreground="">
+
     <com.example.nativetest.widget.MainBottomTabGroupView
         android:id="@+id/tg_bottom_tabs"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
         android:background="@color/white" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/common_divider"
+            />
+    </FrameLayout>
 
 </LinearLayout>

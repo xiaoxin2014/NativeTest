@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="50dp">
     <com.flyco.tablayout.SlidingScaleTabLayout
-        android:layout_gravity="center_horizontal"
+        android:layout_centerInParent="true"
         android:id="@+id/tablayout"
         android:layout_width="wrap_content"
         android:layout_height="50dp"
@@ -27,19 +31,38 @@
         app:tl_textUnSelectColor="#8F929A"
         app:tl_textUnSelectSize="14sp" />
 
-    <com.google.android.material.tabs.TabLayout
-        android:visibility="gone"
-        android:id="@+id/tl"
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_contact"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_alignParentBottom="true"
+            android:background="@drawable/img_chat_contact"
+            android:layout_marginLeft="@dimen/dp_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <androidx.appcompat.widget.AppCompatImageButton
+            android:id="@+id/btn_more"
+            android:layout_marginBottom="@dimen/dp_3"
+            android:layout_alignParentBottom="true"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/img_chat_more"
+            android:layout_marginRight="@dimen/dp_14"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+    </RelativeLayout>
+
+    <FrameLayout
+        android:id="@+id/fl_order_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:tabIndicator="@drawable/indicator_bg"
-        app:tabIndicatorHeight="0dp"
-        app:tabMode="scrollable"
-        app:tabRippleColor="@android:color/transparent" />
+        android:layout_height="match_parent"
+        android:foreground="@drawable/dim"
+        tools:foreground="">
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/vp_main_container"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1" />
+        android:layout_height="match_parent" />
+    </FrameLayout>
 </LinearLayout>

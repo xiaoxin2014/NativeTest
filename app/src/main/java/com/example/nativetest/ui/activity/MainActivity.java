@@ -1,13 +1,12 @@
 package com.example.nativetest.ui.activity;
 
-import android.view.Gravity;
 import android.view.View;
+import android.widget.FrameLayout;
 
-import com.example.nativetest.ConversationListActivity;
 import com.example.nativetest.R;
-import com.example.nativetest.TestTabActivity;
-import com.example.nativetest.db.DbManager;
-import com.example.nativetest.ui.fragment.MainConversationListFragment;
+import com.example.nativetest.ChatFragment;
+import com.example.nativetest.event.CitySelectEvent;
+import com.example.nativetest.event.ShowMoreEvent;
 import com.example.nativetest.ui.fragment.MainFragment;
 import com.example.nativetest.ui.fragment.TwoFragment;
 import com.example.nativetest.widget.MainBottomTabGroupView;
@@ -22,14 +21,17 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 import butterknife.BindView;
-import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.eventbus.EventBus;
 
 public class MainActivity extends BaseActivity {
     @BindView(R.id.tg_bottom_tabs)
     MainBottomTabGroupView mTgBottomTabs;
+    @BindView(R.id.fl_order_layout)
+    FrameLayout mFlOrderLayout;
     private MainFragment mMainFragment;
     private TwoFragment mTwoFragment;
     private Fragment mSelectFragment;
+    private ChatFragment mChatFragment;
 
 
     /**
@@ -77,10 +79,10 @@ public class MainActivity extends BaseActivity {
      * tabs 的图片资源
      */
     private int[] tabImageRes = new int[]{
+            R.drawable.seal_ic_my,
+            R.drawable.seal_ic_two,
             R.drawable.seal_ic_chat,
-            R.drawable.seal_ic_chat,
-            R.drawable.seal_ic_chat,
-            R.drawable.seal_ic_chat
+            R.drawable.seal_ic_me
     };
 
     /**
@@ -95,6 +97,10 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+        EventBus.getDefault().register(this);
+        if (mFlOrderLayout.getForeground() != null) {
+            mFlOrderLayout.getForeground().setAlpha(0);
+        }
         initTabs();
     }
 
@@ -133,6 +139,7 @@ public class MainActivity extends BaseActivity {
                     changeFragment(mMainFragment);
                 }else if(item.id == Tab.CHAT.getValue()){
 //                    readyGo(ConversationListActivity.class);
+                    changeFragment(mChatFragment);
                 }
             }
         });
@@ -148,7 +155,7 @@ public class MainActivity extends BaseActivity {
                 if(item.id == Tab.ME.getValue()){
                     readyGo(SettingActivity.class);
                 }else if(item.id == Tab.MY.getValue()){
-                    readyGo(TestTabActivity.class);
+                    readyGo(ChatFragment.class);
                 }else {
 
                 }
@@ -177,6 +184,8 @@ public class MainActivity extends BaseActivity {
         mTwoFragment = new TwoFragment();
         addFragment(mTwoFragment);
         mSelectFragment = mMainFragment;
+        mChatFragment = new ChatFragment();
+        addFragment(mChatFragment);
         changeFragment(mMainFragment);
     }
 
@@ -194,5 +203,21 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.show(lastFragment);
         fragmentTransaction.commit();
         mSelectFragment = lastFragment;
+    }
+
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
+    }
+
+    public void onEventMainThread(ShowMoreEvent event) {
+        if(event.show) {
+            mFlOrderLayout.getForeground().setAlpha(153);
+        }else {
+            mFlOrderLayout.getForeground().setAlpha(0);
+        }
+
     }
 }
