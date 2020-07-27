@@ -5,6 +5,13 @@
     android:background="@color/white"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_margin="20dp"
+        android:id="@+id/tv_login"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"/>
+
+
     <Button
         android:text="Get Access Token"
         android:id="@+id/btn_access_token"
@@ -47,26 +54,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"/>
 
-    <Button
-        android:text="Get User Info"
-        android:id="@+id/btn_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
-    <TextView
-        android:id="@+id/tv_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <TextView
-        android:id="@+id/tv_is_login"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
-
-    <Button
-        android:text="Update User Info"
-        android:id="@+id/btn_update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
 
 </LinearLayout>

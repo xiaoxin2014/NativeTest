@@ -30,7 +30,19 @@
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_width">wrap_content</item>
     </style>
+    <style name="tv14BlackBStyle">
+        <item name="android:textColor">@color/blackB</item>
+        <item name="android:textSize">@dimen/sp_14</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
 
+    <style name="tv13GrayBStyle">
+        <item name="android:textColor">@color/grayB</item>
+        <item name="android:textSize">@dimen/sp_13</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">wrap_content</item>
+    </style>
     <style name="tv16WhiteStyle">
         <item name="android:textColor">@color/white</item>
         <item name="android:textSize">@dimen/sp_16</item>
@@ -82,6 +94,7 @@
         <item name="android:layout_marginLeft">@dimen/dp_12</item>
         <item name="android:layout_marginRight">@dimen/dp_12</item>
         <item name="android:drawableLeft">@drawable/img_search</item>
+        <item name="android:drawablePadding">10dp</item>
         <item name="android:textColor">@color/blackA</item>
         <item name="android:maxLines">1</item>
         <item name="android:textSize">@dimen/seal_search_title_bar_et_text_size</item>

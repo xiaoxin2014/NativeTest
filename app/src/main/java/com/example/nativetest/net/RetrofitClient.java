@@ -6,7 +6,6 @@ import android.text.TextUtils;
 import android.util.Log;
 
 import com.example.nativetest.common.NetConstant;
-import com.example.nativetest.net.token.ScTokenInterceptor;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;

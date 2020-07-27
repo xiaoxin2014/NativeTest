@@ -8,6 +8,7 @@ import com.example.nativetest.BaseFragment;
 import com.example.nativetest.R;
 import com.example.nativetest.common.LogTag;
 import com.example.nativetest.model.Status;
+import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.utils.log.SLog;
 import com.example.nativetest.viewmodel.LoginViewModel;
 
@@ -18,7 +19,11 @@ import io.rong.imlib.RongIMClient;
 
 public class TwoFragment extends BaseFragment {
     private LoginViewModel mLoginViewModel;
-    private String mToken;
+    //自己的测试用户1
+    //{"userId":"niko1","token":"GEpsiFHSeu9WHjEyUGfZJ7rbXNyChVbiuqG1LeOB0KU=@u7r5.cn.rongnav.com;u7r5.cn.rongcfg.com"}
+    //{"userId":"niko2","token":"ObnhXRXO+AVWHjEyUGfZJ2HTIIz+TTa+pXvEWg4+OqE=@u7r5.cn.rongnav.com;u7r5.cn.rongcfg.com"}
+//    {"userId":"niko3","token":"4qzAmqgDGV1WHjEyUGfZJ59ivYEkLj0ZPFuR4TwKlck=@u7r5.cn.rongnav.com;u7r5.cn.rongcfg.com"}
+    private String mToken = "GEpsiFHSeu9WHjEyUGfZJ7rbXNyChVbiuqG1LeOB0KU=@u7r5.cn.rongnav.com;u7r5.cn.rongcfg.com";
     private String mUserId;
 
     @Override
@@ -81,7 +86,7 @@ public class TwoFragment extends BaseFragment {
                 // 连接 IM 成功后，初始化数据库
 //                DbManager.getInstance(context).openDb(s);
                 SLog.e(LogTag.IM, "connect success - code:" + s);
-
+                ToastUtils.showToast("连接成功");
             }
 
             public void onError(RongIMClient.ConnectionErrorCode errorCode) {

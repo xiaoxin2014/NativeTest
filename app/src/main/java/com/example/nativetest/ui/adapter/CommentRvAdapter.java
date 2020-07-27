@@ -3,14 +3,15 @@ package com.example.nativetest.ui.adapter;
 import android.content.Context;
 import android.view.View;
 
+import com.example.nativetest.model.CommentBean;
 import com.example.nativetest.ui.item.ItemComment;
 
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
 
-public class CommentRvAdapter extends BaseRvAdapter<String>{
-    public CommentRvAdapter(Context context, List<String> datas) {
+public class CommentRvAdapter extends BaseRvAdapter<CommentBean>{
+    public CommentRvAdapter(Context context, List<CommentBean> datas) {
         super(context, datas);
     }
 

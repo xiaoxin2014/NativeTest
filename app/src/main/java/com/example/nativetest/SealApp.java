@@ -11,11 +11,18 @@ import com.example.nativetest.common.ErrorCode;
 import com.example.nativetest.common.LogTag;
 import com.example.nativetest.sp.UserConfigCache;
 import com.example.nativetest.ui.activity.MainActivity;
+import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.utils.log.SLog;
 
+import java.util.List;
+
 import androidx.multidex.MultiDexApplication;
+import io.rong.imkit.DefaultExtensionModule;
+import io.rong.imkit.IExtensionModule;
 import io.rong.imkit.RongConfigurationManager;
+import io.rong.imkit.RongExtensionManager;
 import io.rong.imkit.RongIM;
+import io.rong.imkit.plugin.DefaultLocationPlugin;
 import io.rong.imlib.RongIMClient;
 
 import static io.rong.imkit.utils.SystemUtils.getCurProcessName;
@@ -76,7 +83,8 @@ public class SealApp extends MultiDexApplication {
         // 监听 App 前后台变化
         observeAppInBackground();
 
-        String appKey = "x18ywvqfx5h3c";
+//        String appKey = "x18ywvqfx5h3c";//后台appkey
+        String appKey = "k51hidwqkv77b";//自己appkey
         RongIM.init(appInstance, appKey);
         RongIM.setConnectionStatusListener(new RongIMClient.ConnectionStatusListener() {
             /**
@@ -93,8 +101,42 @@ public class SealApp extends MultiDexApplication {
                 } else if (connectionStatus == ConnectionStatus.TOKEN_INCORRECT) {
                     //TODO token 错误时，重新登录
                 }
+
+
+                else if(connectionStatus == ConnectionStatus.CONNECTED){
+                    connectIM();
+                }
+
             }
         });
+
+    }
+
+    /**
+     * 初始化扩展模块
+     *
+     * @param context
+     */
+    private void initExtensionModules(Context context) {
+        /**
+         * 因为 SealExtensionModule 继承与融云默认 DefaultExtensionModule，
+         * 需要先移除掉默认的扩展后再进行注册
+         * 继承并覆盖默认的扩展模块可在自己需要的时机控制各默认模块的展示与隐藏
+         */
+        List<IExtensionModule> moduleList = RongExtensionManager.getInstance().getExtensionModules();
+        IExtensionModule defaultModule = null;
+        if (moduleList != null) {
+            for (IExtensionModule module : moduleList) {
+                if (module instanceof DefaultExtensionModule) {
+                    defaultModule = module;
+                    break;
+                }
+            }
+            if (defaultModule != null) {
+                RongExtensionManager.getInstance().unregisterExtensionModule(defaultModule);
+            }
+        }
+
 
     }
 
@@ -223,6 +265,53 @@ public class SealApp extends MultiDexApplication {
 //                    "同时，建议您阅读下 README.MD 中的关于【运行 SealTalk-Android】部分，以便您能正常运行。");
 //            throw new IllegalArgumentException("需要运行 SealTalk 您需要指定您所申请融云的 Appkey。");
 //        }
+    }
+
+
+    private String mToken = "GEpsiFHSeu9WHjEyUGfZJ7rbXNyChVbiuqG1LeOB0KU=@u7r5.cn.rongnav.com;u7r5.cn.rongcfg.com\"";
+
+    private void connectIM() {
+        RongIM.connect(mToken, 10, new RongIMClient.ConnectCallback() {
+            @Override
+            public void onDatabaseOpened(RongIMClient.DatabaseOpenStatus databaseOpenStatus) {
+//                if (callback != null) {
+//                    callback.onSuccess(RongIMClient.getInstance().getCurrentUserId());
+//                }
+                SLog.e(LogTag.IM, "connect databaseOpenStatus ");
+
+            }
+
+            @Override
+            public void onSuccess(String s) {
+                // 连接 IM 成功后，初始化数据库
+//                DbManager.getInstance(context).openDb(s);
+                SLog.e(LogTag.IM, "connect success - code:" + s);
+                ToastUtils.showToast("连接成功");
+            }
+
+            public void onError(RongIMClient.ConnectionErrorCode errorCode) {
+                SLog.e(LogTag.IM, "connect error - code:" + errorCode.getValue());
+//                if (errorCode == RongIMClient.ConnectionErrorCode.RC_CONN_TOKEN_INCORRECT) {
+//                    getToken(new ResultCallback<LoginResult>() {
+//                        @Override
+//                        public void onSuccess(LoginResult loginResult) {
+//                            connectIM(loginResult.token, timeOut, callback);
+//                        }
+//34001 30007
+//                        @Override
+//                        public void onFail(int errorCode) {
+//                            callback.onFail(errorCode);
+//                        }
+//                    });;
+//                } else {
+//                    if (callback != null) {
+//                        callback.onFail(ErrorCode.IM_ERROR.getCode());
+//                    } else {
+//                        // do nothing
+//                    }
+//                }
+            }
+        });
     }
 
 }

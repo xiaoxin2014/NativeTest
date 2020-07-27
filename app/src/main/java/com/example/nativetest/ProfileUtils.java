@@ -37,10 +37,10 @@ public class ProfileUtils {
 
         HashMap<String, Object> dataMap = new HashMap<>();
 
-        dataMap.put("Bio","");
-        dataMap.put("Location","");
-        dataMap.put("School","");
-        dataMap.put("DOB","1990-07-15T01:47:10.243Z");
+        dataMap.put("Bio",sProfileInfo.getBio());
+        dataMap.put("Location",sProfileInfo.getLocation());
+        dataMap.put("School",sProfileInfo.getSchool());
+        dataMap.put("DOB",sProfileInfo.getDOB());
 
         if(type==2) {
             dataMap.put(key,value);
@@ -48,7 +48,7 @@ public class ProfileUtils {
 
         HashMap<String, Object> headMap = new HashMap<>();
         headMap.put("UID",sProfileInfo.getHead().getUID());
-        headMap.put("Name","Niko");
+        headMap.put("Name",sProfileInfo.getHead().getName());
         headMap.put("NameColor",sProfileInfo.getHead().getNameColor());
         headMap.put("UserIcon",sProfileInfo.getHead().getUserIcon());
         headMap.put("Gender",sProfileInfo.getHead().isGender());

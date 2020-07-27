@@ -1,7 +1,6 @@
 package com.example.nativetest.ui.activity;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 
 import com.alibaba.fastjson.JSON;
@@ -13,6 +12,7 @@ import com.example.nativetest.R;
 import com.example.nativetest.model.Status;
 import com.example.nativetest.model.sc.UserInfo;
 import com.example.nativetest.utils.ToastUtils;
+import com.example.nativetest.utils.log.SLog;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.dialog.ClearCacheDialog;
 import com.example.nativetest.widget.dialog.CommonDialog;
@@ -58,6 +58,7 @@ public class SettingActivity extends BaseActivity {
                     @Override
                     public void run() {
                         ProfileUtils.sProfileInfo = resource.data;
+                        mUserInfoViewModel.getProfileCache().saveUserCache(resource.data);
                         showToast("获取用户信息成功");
                     }
                 });
@@ -73,6 +74,8 @@ public class SettingActivity extends BaseActivity {
 //                    });
             }
         });
+        SLog.e("Userintfo",JSON.toJSONString(mUserInfoViewModel.getProfileCache().getUserCache()));
+
 
         mUserInfoViewModel.getHasSetPasswordResult().observe(this,result->{
             ProfileUtils.hasSetPw = result.RsData;

@@ -9,6 +9,7 @@ import android.widget.TextView;
 
 import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
+import com.example.nativetest.event.RefreshProfileEvent;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.TitleBar;
 
@@ -17,6 +18,7 @@ import androidx.appcompat.widget.AppCompatTextView;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import io.rong.eventbus.EventBus;
 
 public class PersonalProfileActivity extends BaseActivity {
     @BindView(R.id.title_bar)
@@ -72,6 +74,8 @@ public class PersonalProfileActivity extends BaseActivity {
         mUserInfoViewModel.getUpdateProfile().observe(this, profileInfoResult -> {
             if (profileInfoResult.RsCode == 3) {
                 ProfileUtils.sProfileInfo.setBio(mEtContent.getText().toString().trim());
+                mUserInfoViewModel.getProfileCache().saveUserCache(ProfileUtils.sProfileInfo);
+                EventBus.getDefault().post(new RefreshProfileEvent());
                 finish();
             }
         });

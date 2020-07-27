@@ -4,6 +4,8 @@ import android.content.Context;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.example.nativetest.utils.log.SLog;
+
 import java.util.List;
 
 import androidx.recyclerview.widget.RecyclerView;
@@ -70,6 +72,7 @@ public abstract class BaseRvAdapter<T> extends RecyclerView.Adapter {
     @Override
     public int getItemCount() {
         if(mDatas==null)return 0;
+        SLog.e("BaseRvAdapter","mDatas.size() = "+mDatas.size());
         return mDatas.size();
     }
 

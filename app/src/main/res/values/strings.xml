@@ -85,6 +85,7 @@
     <string name="setting_your_email">填写你的邮箱</string>
     <string name="man">男</string>
     <string name="women">女</string>
+    <string name="delete">删除</string>
     <!--Main-->
     <string-array name="tab_names">
         <item>我的</item>

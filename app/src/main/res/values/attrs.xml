@@ -150,4 +150,5 @@
         <attr name="vip_content" format="string" />
         <attr name="vip_select" format="boolean" />
     </declare-styleable>
+
 </resources>

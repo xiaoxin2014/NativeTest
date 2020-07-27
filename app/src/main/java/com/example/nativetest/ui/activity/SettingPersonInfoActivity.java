@@ -9,9 +9,12 @@ import com.example.nativetest.ProfileUtils;
 import com.example.nativetest.R;
 import com.example.nativetest.db.model.ProfileInfo;
 import com.example.nativetest.event.CitySelectEvent;
+import com.example.nativetest.event.RefreshProfileEvent;
 import com.example.nativetest.model.Resource;
 import com.example.nativetest.model.Result;
 import com.example.nativetest.model.Status;
+import com.example.nativetest.sp.ProfileCache;
+import com.example.nativetest.utils.BirthdayToAgeUtil;
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
 import com.example.nativetest.widget.SettingItemView;
@@ -68,57 +71,59 @@ public class SettingPersonInfoActivity extends BaseActivity {
             @Override
             public void onChanged(Resource<ProfileInfo> resource) {
                 if (resource.status == Status.SUCCESS) {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            ProfileUtils.sProfileInfo = resource.data;
-                            refreshUI();
-                            showToast("获取用户信息成功");
-                        }
-                    });
+                    ProfileUtils.sProfileInfo = resource.data;
+                    mUserInfoViewModel.getProfileCache().saveUserCache(resource.data);
+                    refreshUI();
+//                    dismissLoadingDialog(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            ProfileUtils.sProfileInfo = resource.data;
+//                            mUserInfoViewModel.getProfileCache().saveUserCache(resource.data);
+//                            refreshUI();
+//                        }
+//                    });
 
                 } else if (resource.status == Status.LOADING) {
-                    showLoadingDialog("");
+//                    showLoadingDialog("");
                 } else {
-                    dismissLoadingDialog(new Runnable() {
-                        @Override
-                        public void run() {
-                            showToast(resource.message);
-                        }
-                    });
+//                    dismissLoadingDialog(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            showToast(resource.message);
+//                        }
+//                    });
                 }
             }
         });
-//        {
-//            if (profileInfoResult.RsCode == 3){
-//                ProfileUtils.sProfileInfo = profileInfoResult.RsData;
-//                //刷新界面
-//                refreshUI();
-//            }
-//        });
 
         mUserInfoViewModel.getUpdateProfile().observe(this,profileInfoResult -> {
             if (profileInfoResult.RsCode == 3){
                 //刷新界面
-                ToastUtils.showToast("刷新界面");
-                refreshUI();
+//                ToastUtils.showToast("刷新界面");
+//                refreshUI();
 
+                mUserInfoViewModel.getProfile();
             }
         });
 
-        mUserInfoViewModel.getProfile();
+        if(mUserInfoViewModel.getProfileCache().getUserCache()==null) {
+            mUserInfoViewModel.getProfile();
+        }else {
+            ProfileUtils.sProfileInfo = mUserInfoViewModel.getProfileCache().getUserCache();
+            refreshUI();
+        }
 
     }
 
     private void refreshUI() {
-        ProfileInfo profileInfo = ProfileUtils.sProfileInfo;
+        ProfileInfo profileInfo = mUserInfoViewModel.getProfileCache().getUserCache();
         if(profileInfo==null){return;}
         mSivNickname.setValue(profileInfo.getHead().getName());
         mSivGender.setValue(profileInfo.getHead().isGender()?R.string.man:R.string.women);
         mSivCity.setValue(profileInfo.getLocation());
         mSivOwn.setValue(profileInfo.getBio());
         mSivSchool.setValue(profileInfo.getSchool());
-        mSivAge.setValue(profileInfo.getDOB());
+        mSivAge.setValue(BirthdayToAgeUtil.BirthdayToAge(profileInfo.getDOB()));
     }
 
     @OnClick({R.id.siv_img, R.id.siv_nickname, R.id.siv_gender, R.id.siv_city, R.id.siv_own, R.id.siv_school, R.id.siv_age})
@@ -162,6 +167,9 @@ public class SettingPersonInfoActivity extends BaseActivity {
             @Override
             public void onDateChoose(int year, int month, int day) {
                 ToastUtils.showToast(year + "-" + month +"-" + day);
+
+                mUserInfoViewModel.updateProfile(2,"DOB",year + "-" + month +"-" + day);
+
             }
         });
         datePickerDialogFragment.show(getSupportFragmentManager(), "DatePickerDialogFragment");
@@ -169,10 +177,11 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     private void showSelectGenderDialog() {
         SelectGenderBottomDialog.Builder builder = new SelectGenderBottomDialog.Builder();
+        SelectGenderBottomDialog dialog = builder.build();
         builder.setOnSelectPictureListener(isMan -> {
+            dialog.dismiss();
             mUserInfoViewModel.updateProfile(3,"Gender",isMan);
         });
-        SelectGenderBottomDialog dialog = builder.build();
         dialog.show(getSupportFragmentManager(), "select_picture_dialog");
     }
 
@@ -197,9 +206,8 @@ public class SettingPersonInfoActivity extends BaseActivity {
      * @param uri
      */
     private void uploadPortrait(Uri uri) {
-//        if (userInfoViewModel != null) {
-//            userInfoViewModel.uploadPortrait(uri);
-//        }
+        String path = uri.getPath();
+        mUserInfoViewModel.uploadAvatar(path);
     }
 
     @Override
@@ -210,6 +218,10 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     public void onEventMainThread(CitySelectEvent event) {
         mSivCity.setValue(event.getCity());
-        mUserInfoViewModel.updateProfile(2,"Location",event.getCityCode());
+        mUserInfoViewModel.updateProfile(2,"Location",event.getCity());
+    }
+
+    public void onEventMainThread(RefreshProfileEvent refreshProfileEvent){
+        refreshUI();
     }
 }

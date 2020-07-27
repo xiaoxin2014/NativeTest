@@ -4,9 +4,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
 
+import com.example.nativetest.model.sc.UserInfo;
 import com.google.gson.Gson;
 
-//import cn.rongcloud.im.model.UserCacheInfo;
+//import cn.rongcloud.im.model.UserInfo;
 
 /**
  * 缓存登录后的用户信息。 即最有一个登录用户。
@@ -22,81 +23,81 @@ public class UserCache {
     public UserCache(Context context) {
         sp = context.getSharedPreferences(SP_NAME, Context.MODE_PRIVATE);
     }
-
-//    /**
-//     * 缓存去登录之后 User 的信息。
-//     * @param userCacehInfo
-//     */
-//    public void saveUserCache(UserCacheInfo userCacehInfo) {
-//        if (userCacehInfo == null || TextUtils.isEmpty(userCacehInfo.getId())) {
-//            return ;
-//        }
-//        UserCacheInfo tmpCacheInfo = getUserCache();
-//        if (tmpCacheInfo != null && !TextUtils.isEmpty(tmpCacheInfo.getId()) && !userCacehInfo.getId().equals(tmpCacheInfo.getId())) {
-//            // 另一个不同的用户
-//            Gson gson = new Gson();
-//            String userJson = gson.toJson(userCacehInfo);
-//            sp.edit().putString(SP_CACHE_USER, userJson).commit();
-//            return;
-//        }
+    
+    /**
+     * 缓存去登录之后 User 的信息。
+     * @param userCacehInfo
+     */
+    public void saveUserCache(UserInfo userCacehInfo) {
+        if (userCacehInfo == null || TextUtils.isEmpty(userCacehInfo.getId())) {
+            return ;
+        }
+        UserInfo tmpCacheInfo = getUserCache();
+        if (tmpCacheInfo != null && !TextUtils.isEmpty(tmpCacheInfo.getId()) && !userCacehInfo.getId().equals(tmpCacheInfo.getId())) {
+            // 另一个不同的用户
+            Gson gson = new Gson();
+            String userJson = gson.toJson(userCacehInfo);
+            sp.edit().putString(SP_CACHE_USER, userJson).commit();
+            return;
+        }
 //        // 同一个用户或者第一个用户
 //        if (tmpCacheInfo != null) {
-//            tmpCacheInfo.setUserCacheInfo(userCacehInfo);
+//            tmpCacheInfo.setUserInfo(userCacehInfo);
 //        } else {
 //            tmpCacheInfo = userCacehInfo;
 //        }
-//
-//        Gson gson = new Gson();
-//        String userJson = gson.toJson(tmpCacheInfo);
-//        sp.edit().putString(SP_CACHE_USER, userJson).commit();
-//    }
-//
-//
-//
-//    /**
-//     * 获取用户缓存信息
-//     * @return
-//     */
-//    public UserCacheInfo getUserCache() {
-//        try {
-//            String userJson = sp.getString(SP_CACHE_USER, "");
-//            if (TextUtils.isEmpty(userJson)) {
-//                return  null;
-//            }
-//
-//            Gson gson = new Gson();
-//            UserCacheInfo userCacheInfo = gson.fromJson(userJson, UserCacheInfo.class);
-//            return userCacheInfo;
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//        return null;
-//    }
-//
-//    /**
-//     * 获取当前的用户ID
-//     * @return
-//     */
-//    public String getCurrentUserId() {
-//        UserCacheInfo userCache = getUserCache();
-//        if (userCache == null) {
-//            return null;
-//        }
-//        return userCache.getId();
-//    }
-//
-//    /**
-//     * 退出登录所要清理的缓存
-//     */
-//    public void logoutClear() {
-//        UserCacheInfo userCache = getUserCache();
-//        if (userCache == null) {
-//            return ;
-//        }
+
+        Gson gson = new Gson();
+        String userJson = gson.toJson(tmpCacheInfo);
+        sp.edit().putString(SP_CACHE_USER, userJson).commit();
+    }
+
+
+
+    /**
+     * 获取用户缓存信息
+     * @return
+     */
+    public UserInfo getUserCache() {
+        try {
+            String userJson = sp.getString(SP_CACHE_USER, "");
+            if (TextUtils.isEmpty(userJson)) {
+                return  null;
+            }
+
+            Gson gson = new Gson();
+            UserInfo UserInfo = gson.fromJson(userJson, UserInfo.class);
+            return UserInfo;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * 获取当前的用户ID
+     * @return
+     */
+    public String getCurrentUserId() {
+        UserInfo userCache = getUserCache();
+        if (userCache == null) {
+            return null;
+        }
+        return userCache.getId();
+    }
+
+    /**
+     * 退出登录所要清理的缓存
+     */
+    public void logoutClear() {
+        UserInfo userCache = getUserCache();
+        if (userCache == null) {
+            return ;
+        }
 //        userCache.setLoginToken("");
-//        userCache.setId("");
-//        Gson gson = new Gson();
-//        String userJson = gson.toJson(userCache);
-//        sp.edit().putString(SP_CACHE_USER, userJson).commit();
-//    }
+        userCache.setId("");
+        Gson gson = new Gson();
+        String userJson = gson.toJson(userCache);
+        sp.edit().putString(SP_CACHE_USER, userJson).commit();
+    }
 }

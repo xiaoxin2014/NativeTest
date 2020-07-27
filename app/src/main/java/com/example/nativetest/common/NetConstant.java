@@ -16,4 +16,16 @@ public class NetConstant {
 
     public final static String JSON = "Content-Type:application/json";
     public final static String FORM = "Content-Type:multipart/form-data";
+
+
+
+
+
+    public static String Authorization = "Basic ampBcHBBcGlDbGllbnQ6Q2lyY2xlMjAyMEBXb3JsZA==";
+
+
+
+    public final static int SKIP = 0;
+    public final static int TAKE = 0;
+
 }

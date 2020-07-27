@@ -21,6 +21,7 @@ public class LoginViewModel extends AndroidViewModel {
 
     private SingleSourceLiveData<Resource<Boolean>> changePwResult = new SingleSourceLiveData<>();
     private SingleSourceLiveData<Resource<Boolean>> setPwResult = new SingleSourceLiveData<>();
+    private SingleSourceLiveData<Resource<String>> uploadResult = new SingleSourceLiveData<>();
 
 
     public LoginViewModel(@NonNull Application application) {
@@ -85,5 +86,6 @@ public class LoginViewModel extends AndroidViewModel {
     public SingleSourceLiveData<Resource<Boolean>> getSetPwResult() {
         return setPwResult;
     }
+
 
 }

@@ -1,14 +1,20 @@
 package com.example.nativetest.ui.activity;
 
+import android.os.Handler;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.example.nativetest.ConversationListActivity;
 import com.example.nativetest.R;
 import com.example.nativetest.ChatFragment;
 import com.example.nativetest.event.CitySelectEvent;
 import com.example.nativetest.event.ShowMoreEvent;
 import com.example.nativetest.ui.fragment.MainFragment;
 import com.example.nativetest.ui.fragment.TwoFragment;
+import com.example.nativetest.ui.item.ItemComment;
+import com.example.nativetest.widget.ChatTipsPop;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;
 import com.example.nativetest.widget.TabGroupView;
@@ -33,6 +39,8 @@ public class MainActivity extends BaseActivity {
     private Fragment mSelectFragment;
     private ChatFragment mChatFragment;
 
+    private boolean showPop;
+    private ChatTipsPop mPop;
 
     /**
      * tab 项枚举
@@ -85,10 +93,6 @@ public class MainActivity extends BaseActivity {
             R.drawable.seal_ic_me
     };
 
-    /**
-     * 各个 Fragment 界面
-     */
-    private List<Fragment> fragments = new ArrayList<>();
 
     @Override
     protected int getLayoutId() {
@@ -138,7 +142,6 @@ public class MainActivity extends BaseActivity {
                 }else if(item.id == Tab.MY.getValue()){
                     changeFragment(mMainFragment);
                 }else if(item.id == Tab.CHAT.getValue()){
-//                    readyGo(ConversationListActivity.class);
                     changeFragment(mChatFragment);
                 }
             }
@@ -155,15 +158,14 @@ public class MainActivity extends BaseActivity {
                 if(item.id == Tab.ME.getValue()){
                     readyGo(SettingActivity.class);
                 }else if(item.id == Tab.MY.getValue()){
-                    readyGo(ChatFragment.class);
+//                    readyGo(ChatFragment.class);
                 }else {
-
+                    readyGo(ConversationListActivity.class);
                 }
             }
         });
 
-        ((MainBottomTabItem) mTgBottomTabs.getView(Tab.CHAT.getValue())).setNum("11");
-        ((MainBottomTabItem) mTgBottomTabs.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
+
 
 //        // 未读数拖拽
 //        ((MainBottomTabItem) tabGroupView.getView(Tab.CHAT.getValue())).setTabUnReadNumDragListener(new DragPointView.OnDragListencer() {
@@ -218,6 +220,45 @@ public class MainActivity extends BaseActivity {
         }else {
             mFlOrderLayout.getForeground().setAlpha(0);
         }
-
     }
+
+    private void showTipsPop() {
+        mPop = new ChatTipsPop(this);
+        View tabsView = mTgBottomTabs.getView(Tab.CHAT.getValue()).findViewById(R.id.iv_tab_img);
+        mPop.showUp(tabsView);
+    }
+
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if(!showPop){
+            showTipsPop();
+            showPop = true;
+            new Handler().postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    if(isDestroyed()){return;}
+                    if(mPop!=null&&mPop.isShowing()){
+                        mPop.dismiss();
+                        if(mTgBottomTabs!=null) {
+                            ((MainBottomTabItem) mTgBottomTabs.getView(Tab.CHAT.getValue())).setNum("11");
+                            ((MainBottomTabItem) mTgBottomTabs.getView(Tab.CHAT.getValue())).setNumVisibility(View.VISIBLE);
+                        }
+                    }
+                }
+            }, 3000);
+        }
+    }
+
+
+//    /**
+//     * 显示键盘
+//     *
+//     */
+//    public void showInput() {
+//        mEtInput.requestFocus();
+//        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
+//        imm.showSoftInput(mEtInput, InputMethodManager.SHOW_IMPLICIT);
+//    }
+
 }

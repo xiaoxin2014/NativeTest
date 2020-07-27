@@ -3,6 +3,7 @@ package com.example.nativetest.net;
 import android.util.Log;
 
 import com.alibaba.fastjson.JSON;
+import com.example.nativetest.common.NetConstant;
 import com.example.nativetest.utils.log.SLog;
 import com.google.gson.JsonObject;
 
@@ -39,23 +40,13 @@ public class ScInterceptor implements Interceptor {
         ResponseBody body = response.peekBody(1024 * 1024);
         String responseString = body.string();
         SLog.e("retrofitResponse", request.url() + "---------" + responseString);
-//        String str ;
-//        if(responseString.length()>=2){
-//            str = responseString.substring(1,responseString.length()-1);
-//            String contentType = body.contentType().toString();
-//            int length = str.length();
-//            ResponseBody body1 = new RealResponseBody(contentType,length,body.source());
-//            Response response1 = response.newBuilder().body(body1).build();
-//            SLog.e("retrofitResponse 2", "---------" + JSON.toJSONString(response1));
-//            return response1;
-//        }
+
         return response;
     }
 
-    public static String Authorization = "Basic ampBcHBBcGlDbGllbnQ6Q2lyY2xlMjAyMEBXb3JsZA==";
 
     private static String getAuthorization() {
-        return Authorization;
+        return NetConstant.Authorization;
     }
 
     public static String getDV() {

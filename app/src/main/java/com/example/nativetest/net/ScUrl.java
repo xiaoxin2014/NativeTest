@@ -9,6 +9,11 @@ public class ScUrl {
     public static final String PROFILE_GET = "api/ScUser/ProfileGet";
     public static final String PROFILE_UPDATE = "api/ScUser/ProfileUpdate";
     public static final String LOG_OUT = "/api/ScUser/Logout";
+    public static final String COMMENTS_LIST = "/api/ScMoment/CommentsCenter";
+    public static final String FOLLOWING_LIST = "/api/ScUser/FollowingsList";
+    public static final String FOLLOWERS_LIST = "/api/ScUser/FollowersList";//通讯录
+    public static final String FOLLOWERS_REQUEST_LIST = "/api/ScUser/FollowersListDetail";//好友请求
+
 
 
 
@@ -27,4 +32,11 @@ public class ScUrl {
     public static final String CONNECT_TOKEN = "connect/token";
     public static final String CHANGE_PW_BY_CODE = "api/MemberApi/ChangePWbyCode";
     public static final String CHANGE_PW_BY_OLD_PW = "api/MemberApi/ChangePWbyOldPW";
+
+
+
+    //上传图片
+    public static final String UPLOAD_BASE_URL = "https://ttmedia.alilusions.com/";
+    public static final String UPLOAD_AVATAR = "api/jjUpload/UUupload";
+
 }

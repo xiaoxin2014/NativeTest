@@ -2,6 +2,7 @@ package com.example.nativetest;
 
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,17 +12,22 @@ import android.widget.PopupWindow;
 import com.example.nativetest.event.ShowMoreEvent;
 import com.example.nativetest.ui.activity.ContactsActivity;
 import com.example.nativetest.ui.fragment.CommentFragment;
+import com.example.nativetest.ui.fragment.MyChatFragment;
 import com.flyco.tablayout.SlidingScaleTabLayout;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.AppCompatImageButton;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 import butterknife.BindView;
 import butterknife.OnClick;
 import io.rong.eventbus.EventBus;
+import io.rong.imkit.RongIM;
+import io.rong.imkit.fragment.ConversationListFragment;
+import io.rong.imlib.model.Conversation;
 
 public class ChatFragment extends BaseFragment {
     @BindView(R.id.tablayout)
@@ -71,6 +77,9 @@ public class ChatFragment extends BaseFragment {
 
             @Override
             public Fragment getItem(int i) {
+                if(i == 0 ){
+                    return MyChatFragment.getInstance(i);
+                }
                 return CommentFragment.getInstance(i);
             }
         };
@@ -111,6 +120,7 @@ public class ChatFragment extends BaseFragment {
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.btn_contact:
+//                readyGo(ContactListActivity.class);
                 readyGo(ContactsActivity.class);
                 break;
             case R.id.btn_more:
@@ -126,6 +136,7 @@ public class ChatFragment extends BaseFragment {
                 @Override
                 public void onClick(View v) {
                     mPopupWindow.dismiss();
+                    RongIM.getInstance().startGroupChat(getActivity(), "1", "标题");
                 }
             });
             mPopupWindow = new PopupWindow(view, ViewPager.LayoutParams.WRAP_CONTENT, ViewPager.LayoutParams.WRAP_CONTENT, true);
@@ -152,41 +163,5 @@ public class ChatFragment extends BaseFragment {
             mPopupWindow.showAsDropDown(mBtnMore);
         }
 
-
-//    private void showSpinner() {
-//        if (mPopupWindow == null) {
-//            View view = LayoutInflater.from(mContext).inflate(R.layout.dialog_spinner, null);
-//            mTvTopic = (TextView) view.findViewById(R.id.tv_my_topic);
-//            mTvQA = (TextView) view.findViewById(R.id.tv_my_qa);
-//            mTvFocusTopic = (TextView) view.findViewById(R.id.tv_focus_topics);
-//            mPopupWindow = new PopupWindow(view, ViewPager.LayoutParams.MATCH_PARENT, ViewPager.LayoutParams.WRAP_CONTENT, true);
-//            mPopupWindow.setFocusable(true);
-//            mPopupWindow.setBackgroundDrawable(new BitmapDrawable());
-//            mPopupWindow.setOutsideTouchable(true);
-//            mTvTopic.setOnClickListener(new DialogSpinner());
-//            mTvQA.setOnClickListener(new DialogSpinner());
-//            mTvFocusTopic.setOnClickListener(new DialogSpinner());
-//            mPopupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//                @Override
-//                public void onDismiss() {
-//                    ExpandAnimator.arrowAnimator(mImgSocial, -180, 0);
-////                    WindowUtils.setWindowAlpha(PersonalSocialCenter.this, 1);
-//                    if(mFlOrderLayout.getForeground()!=null){
-//                        mFlOrderLayout.getForeground().setAlpha(0);
-//                    }
-//                }
-//            });
-//        }
-//        if (mPopupWindow != null && !mPopupWindow.isShowing()) {
-////            WindowUtils.setWindowAlpha(PersonalSocialCenter.this, 0.6f);
-//            if(mFlOrderLayout.getForeground()!=null){
-//                mFlOrderLayout.getForeground().setAlpha(153);
-//            }
-//
-//            mPopupWindow.showAsDropDown(mLlTitle);
-//            ExpandAnimator.arrowAnimator(mImgSocial, 0, -180);
-//        }
-//
-//    }
     }
 }
