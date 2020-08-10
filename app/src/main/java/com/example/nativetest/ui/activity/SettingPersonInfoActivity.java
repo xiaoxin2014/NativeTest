@@ -1,6 +1,5 @@
 package com.example.nativetest.ui.activity;
 
-import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.view.View;
@@ -11,9 +10,7 @@ import com.example.nativetest.db.model.ProfileInfo;
 import com.example.nativetest.event.CitySelectEvent;
 import com.example.nativetest.event.RefreshProfileEvent;
 import com.example.nativetest.model.Resource;
-import com.example.nativetest.model.Result;
 import com.example.nativetest.model.Status;
-import com.example.nativetest.sp.ProfileCache;
 import com.example.nativetest.utils.BirthdayToAgeUtil;
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.viewmodel.UserInfoViewModel;
@@ -22,9 +19,6 @@ import com.example.nativetest.widget.dialog.SelectGenderBottomDialog;
 import com.example.nativetest.widget.dialog.SelectPictureBottomDialog;
 import com.example.nativetest.widget.wheel.date.DatePickerDialogFragment;
 
-import java.text.SimpleDateFormat;
-
-import androidx.annotation.Nullable;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import butterknife.BindView;
@@ -96,8 +90,8 @@ public class SettingPersonInfoActivity extends BaseActivity {
             }
         });
 
-        mUserInfoViewModel.getUpdateProfile().observe(this,profileInfoResult -> {
-            if (profileInfoResult.RsCode == 3){
+        mUserInfoViewModel.getUpdateProfile().observe(this, profileInfoResult -> {
+            if (profileInfoResult.RsCode == 3) {
                 //刷新界面
 //                ToastUtils.showToast("刷新界面");
 //                refreshUI();
@@ -106,9 +100,9 @@ public class SettingPersonInfoActivity extends BaseActivity {
             }
         });
 
-        if(mUserInfoViewModel.getProfileCache().getUserCache()==null) {
+        if (mUserInfoViewModel.getProfileCache().getUserCache() == null) {
             mUserInfoViewModel.getProfile();
-        }else {
+        } else {
             ProfileUtils.sProfileInfo = mUserInfoViewModel.getProfileCache().getUserCache();
             refreshUI();
         }
@@ -117,9 +111,11 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     private void refreshUI() {
         ProfileInfo profileInfo = mUserInfoViewModel.getProfileCache().getUserCache();
-        if(profileInfo==null){return;}
+        if (profileInfo == null) {
+            return;
+        }
         mSivNickname.setValue(profileInfo.getHead().getName());
-        mSivGender.setValue(profileInfo.getHead().isGender()?R.string.man:R.string.women);
+        mSivGender.setValue(profileInfo.getHead().isGender() ? R.string.man : R.string.women);
         mSivCity.setValue(profileInfo.getLocation());
         mSivOwn.setValue(profileInfo.getBio());
         mSivSchool.setValue(profileInfo.getSchool());
@@ -134,9 +130,9 @@ public class SettingPersonInfoActivity extends BaseActivity {
                 break;
             case R.id.siv_nickname:
                 Bundle bundleNickname = new Bundle();
-                bundleNickname.putString("nickname",mSivNickname.getValue());
-                bundleNickname.putInt("type",TYPE_NICKNAME);
-                readyGo(ModifyNicknameActivity.class,bundleNickname);
+                bundleNickname.putString("nickname", mSivNickname.getValue());
+                bundleNickname.putInt("type", TYPE_NICKNAME);
+                readyGo(ModifyNicknameActivity.class, bundleNickname);
                 break;
             case R.id.siv_gender:
                 showSelectGenderDialog();
@@ -146,14 +142,14 @@ public class SettingPersonInfoActivity extends BaseActivity {
                 break;
             case R.id.siv_own:
                 Bundle bundlePersonal = new Bundle();
-                bundlePersonal.putString("content",mSivOwn.getValue());
-                readyGo(PersonalProfileActivity.class,bundlePersonal);
+                bundlePersonal.putString("content", mSivOwn.getValue());
+                readyGo(PersonalProfileActivity.class, bundlePersonal);
                 break;
             case R.id.siv_school:
                 Bundle bundleSchool = new Bundle();
-                bundleSchool.putString("school",mSivSchool.getValue());
-                bundleSchool.putInt("type",TYPE_SCHOOL);
-                readyGo(ModifyNicknameActivity.class,bundleSchool);
+                bundleSchool.putString("school", mSivSchool.getValue());
+                bundleSchool.putInt("type", TYPE_SCHOOL);
+                readyGo(ModifyNicknameActivity.class, bundleSchool);
                 break;
             case R.id.siv_age:
                 showDateDialog();
@@ -166,9 +162,9 @@ public class SettingPersonInfoActivity extends BaseActivity {
         datePickerDialogFragment.setOnDateChooseListener(new DatePickerDialogFragment.OnDateChooseListener() {
             @Override
             public void onDateChoose(int year, int month, int day) {
-                ToastUtils.showToast(year + "-" + month +"-" + day);
+                ToastUtils.showToast(year + "-" + month + "-" + day);
 
-                mUserInfoViewModel.updateProfile(2,"DOB",year + "-" + month +"-" + day);
+                mUserInfoViewModel.updateProfile(2, "DOB", year + "-" + month + "-" + day);
 
             }
         });
@@ -180,7 +176,7 @@ public class SettingPersonInfoActivity extends BaseActivity {
         SelectGenderBottomDialog dialog = builder.build();
         builder.setOnSelectPictureListener(isMan -> {
             dialog.dismiss();
-            mUserInfoViewModel.updateProfile(3,"Gender",isMan);
+            mUserInfoViewModel.updateProfile(3, "Gender", isMan);
         });
         dialog.show(getSupportFragmentManager(), "select_picture_dialog");
     }
@@ -208,6 +204,7 @@ public class SettingPersonInfoActivity extends BaseActivity {
     private void uploadPortrait(Uri uri) {
         String path = uri.getPath();
         mUserInfoViewModel.uploadAvatar(path);
+        showToast(path);
     }
 
     @Override
@@ -218,10 +215,10 @@ public class SettingPersonInfoActivity extends BaseActivity {
 
     public void onEventMainThread(CitySelectEvent event) {
         mSivCity.setValue(event.getCity());
-        mUserInfoViewModel.updateProfile(2,"Location",event.getCity());
+        mUserInfoViewModel.updateProfile(2, "Location", event.getCity());
     }
 
-    public void onEventMainThread(RefreshProfileEvent refreshProfileEvent){
+    public void onEventMainThread(RefreshProfileEvent refreshProfileEvent) {
         refreshUI();
     }
 }

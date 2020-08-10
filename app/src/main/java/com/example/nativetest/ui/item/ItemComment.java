@@ -10,6 +10,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 import com.example.nativetest.R;
+import com.example.nativetest.event.ItemCommentEvent;
 import com.example.nativetest.ui.activity.SelectAtPersonActivity;
 import com.example.nativetest.ui.adapter.BaseItemView;
 
@@ -29,8 +30,7 @@ public class ItemComment extends BaseItemView {
     AppCompatTextView mTvContent;
     @BindView(R.id.iv_right)
     AppCompatImageView mIvRight;
-    @BindView(R.id.et_input)
-    EditText mEtInput;
+
 
     public ItemComment(Context context) {
         super(context);
@@ -47,23 +47,23 @@ public class ItemComment extends BaseItemView {
 
     @Override
     protected void initView() {
-        mEtInput.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if(String.valueOf(s).equals("@")){
-                    readyGo(SelectAtPersonActivity.class);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-            }
-        });
+//        mEtInput.addTextChangedListener(new TextWatcher() {
+//            @Override
+//            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+//
+//            }
+//
+//            @Override
+//            public void onTextChanged(CharSequence s, int start, int before, int count) {
+//                if(String.valueOf(s).equals("@")){
+//                    readyGo(SelectAtPersonActivity.class);
+//                }
+//            }
+//
+//            @Override
+//            public void afterTextChanged(Editable s) {
+//            }
+//        });
     }
 
     public void bindData() {
@@ -74,16 +74,8 @@ public class ItemComment extends BaseItemView {
 
     @OnClick(R.id.ll_container)
     public void onViewClicked() {
-        showInput();
+        EventBus.getDefault().post(new ItemCommentEvent());
     }
 
-    /**
-     * 显示键盘
-     *
-     */
-    public void showInput() {
-        mEtInput.requestFocus();
-        InputMethodManager imm = (InputMethodManager) mContext.getSystemService(INPUT_METHOD_SERVICE);
-        imm.showSoftInput(mEtInput, InputMethodManager.SHOW_IMPLICIT);
-    }
+
 }

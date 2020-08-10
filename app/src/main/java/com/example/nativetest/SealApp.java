@@ -83,6 +83,7 @@ public class SealApp extends MultiDexApplication {
         // 监听 App 前后台变化
         observeAppInBackground();
 
+
 //        String appKey = "x18ywvqfx5h3c";//后台appkey
         String appKey = "k51hidwqkv77b";//自己appkey
         RongIM.init(appInstance, appKey);

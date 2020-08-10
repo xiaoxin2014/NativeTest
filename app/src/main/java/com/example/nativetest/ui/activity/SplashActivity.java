@@ -15,6 +15,8 @@ public class SplashActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());
         startActivity(new Intent(this, MainActivity.class));
+//        startActivity(new Intent(this, TestActivity1.class));
+//        startActivity(new Intent(this, MyLikedActivity.class));
         finish();
     }
 

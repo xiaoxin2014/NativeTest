@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.widget.LoadingDialog;
+import com.gyf.immersionbar.ImmersionBar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

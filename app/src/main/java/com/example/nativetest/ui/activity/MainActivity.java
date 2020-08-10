@@ -2,18 +2,14 @@ package com.example.nativetest.ui.activity;
 
 import android.os.Handler;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.example.nativetest.ChatFragment;
 import com.example.nativetest.ConversationListActivity;
 import com.example.nativetest.R;
-import com.example.nativetest.ChatFragment;
-import com.example.nativetest.event.CitySelectEvent;
 import com.example.nativetest.event.ShowMoreEvent;
 import com.example.nativetest.ui.fragment.MainFragment;
 import com.example.nativetest.ui.fragment.TwoFragment;
-import com.example.nativetest.ui.item.ItemComment;
 import com.example.nativetest.widget.ChatTipsPop;
 import com.example.nativetest.widget.MainBottomTabGroupView;
 import com.example.nativetest.widget.MainBottomTabItem;
@@ -249,16 +245,8 @@ public class MainActivity extends BaseActivity {
             }, 3000);
         }
     }
-
-
-//    /**
-//     * 显示键盘
-//     *
-//     */
-//    public void showInput() {
-//        mEtInput.requestFocus();
-//        InputMethodManager imm = (InputMethodManager) getSystemService(INPUT_METHOD_SERVICE);
-//        imm.showSoftInput(mEtInput, InputMethodManager.SHOW_IMPLICIT);
-//    }
+    protected void onKeyBoardChange(boolean isPopup){
+        mTgBottomTabs.setVisibility(isPopup?View.GONE:View.VISIBLE);
+    }
 
 }

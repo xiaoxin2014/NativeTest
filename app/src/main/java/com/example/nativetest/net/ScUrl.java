@@ -13,6 +13,7 @@ public class ScUrl {
     public static final String FOLLOWING_LIST = "/api/ScUser/FollowingsList";
     public static final String FOLLOWERS_LIST = "/api/ScUser/FollowersList";//通讯录
     public static final String FOLLOWERS_REQUEST_LIST = "/api/ScUser/FollowersListDetail";//好友请求
+    public static final String FOLLOWINGS_REMOVE = "/api/ScUser/FollowingsRemove";//取消好友
 
 
 

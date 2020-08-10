@@ -24,6 +24,7 @@ import com.example.nativetest.R;
 import com.example.nativetest.utils.ToastUtils;
 import com.example.nativetest.widget.LoadingDialog;
 import com.gyf.immersionbar.ImmersionBar;
+import com.gyf.immersionbar.OnKeyboardListener;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
@@ -93,13 +94,28 @@ public abstract class BaseActivity extends AppCompatActivity {
         // 清除已存在的 Fragment 防止因没有复用导致叠加显示
         clearAllFragmentExistBeforeCreate();
 
-        ImmersionBar.with(this).fitsSystemWindows(true).statusBarColor(R.color.white).statusBarDarkFont(true).init();
+        ImmersionBar
+                .with(this)
+                .fitsSystemWindows(true)
+                .keyboardEnable(true)
+                .statusBarColor(R.color.white)
+                .statusBarDarkFont(true)
+                .setOnKeyboardListener(new OnKeyboardListener() {
+                    @Override
+                    public void onKeyboardChange(boolean isPopup, int keyboardHeight) {
+                        onKeyBoardChange(isPopup);
+                    }
+                })
+                .init();
         setContentView(getLayoutId());
 
         //绑定控件
         mBind = ButterKnife.bind(this);
         mContext = this;
         initView();
+    }
+
+    protected void onKeyBoardChange(boolean isPopup) {
     }
 
     protected void initView(){}

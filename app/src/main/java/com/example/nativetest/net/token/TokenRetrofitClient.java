@@ -3,14 +3,21 @@ package com.example.nativetest.net.token;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.text.TextUtils;
+import android.util.Base64;
+import android.util.Log;
 
+import com.example.nativetest.BuildConfig;
 import com.example.nativetest.common.NetConstant;
+import com.example.nativetest.net.EncodeUtils;
 import com.example.nativetest.net.LiveDataCallAdapterFactory;
 import com.example.nativetest.net.ScInterceptor;
+
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.security.cert.CertificateException;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HostnameVerifier;
@@ -20,6 +27,8 @@ import javax.net.ssl.SSLSocketFactory;
 import javax.net.ssl.TrustManager;
 import javax.net.ssl.X509TrustManager;
 
+import androidx.annotation.NonNull;
+import okhttp3.FormBody;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -62,7 +71,7 @@ public class TokenRetrofitClient {
     private OkHttpClient getUnsafeOkHttpClient() {
         try {
             // Create a trust manager that does not validate certificate chains
-            final TrustManager[] trustAllCerts = new TrustManager[] {
+            final TrustManager[] trustAllCerts = new TrustManager[]{
                     new X509TrustManager() {
                         @Override
                         public void checkClientTrusted(java.security.cert.X509Certificate[] chain, String authType) throws CertificateException {
@@ -88,7 +97,7 @@ public class TokenRetrofitClient {
             OkHttpClient.Builder okHttpBuilder = new OkHttpClient.Builder()
                     .addInterceptor(new AddHeaderInterceptor(mContext))
                     .addInterceptor(new ReceivedCookiesInterceptor(mContext))
-//                    .addInterceptor(new ScTokenInterceptor())
+                    .addInterceptor(new MyInterceptor())
                     .addInterceptor(new ScInterceptor())
                     .connectTimeout(NetConstant.API_CONNECT_TIME_OUT, TimeUnit.SECONDS)
                     .readTimeout(NetConstant.API_READ_TIME_OUT, TimeUnit.SECONDS)
@@ -106,7 +115,6 @@ public class TokenRetrofitClient {
             throw new RuntimeException(e);
         }
     }
-
 
 
     /**
@@ -171,7 +179,71 @@ public class TokenRetrofitClient {
         }
     }
 
+    public class MyInterceptor implements Interceptor {
+
+        //该构造方法只会调用一次
+        public MyInterceptor() {
+        }
+
+        @NonNull
+        @Override
+        public Response intercept(@NonNull Chain chain) {
+            Request request = chain.request();
+            Request.Builder builder = request.newBuilder();
+
+            Response response = null;
+            String responseInfo = "";
+            try {
+                //添加公共请求参数
+                response = chain.proceed(builder.build());
+                responseInfo = response.peekBody(1024 * 1024).string();
+                //打印响应结果
+                httpLog(request, responseInfo);
+            } catch (Exception e) {
+
+            }
+
+
+            return response;
+        }
+
+        private String getBase64(Map map) {
+            return Base64.encodeToString(new JSONObject(map).toString().getBytes(), Base64.NO_WRAP);
+        }
+
+        private void httpLog(Request request, String responseInfo) {
+            if (BuildConfig.DEBUG) {
+                Log.d("xiaoxin", "----------Start-----------");
+                //打印请求Ulr
+                Log.d("xiaoxinRequest", String.format("Sending request %s",
+                        request.url()));
+
+                //打印请求参数
+                String method = request.method();
+                if ("POST".equals(method)) {
+                    StringBuilder sb = new StringBuilder();
+                    if (request.body() instanceof FormBody) {
+                        FormBody formBody = (FormBody) request.body();
+                        for (int i = 0; i < formBody.size(); i++) {
+                            sb.append(formBody.encodedName(i)).append("=").append(EncodeUtils.urlDecode(formBody.encodedValue(i)).replace("<", "<").replace(">", ">").replace("%24", "$")).append(",");
+                        }
+
+                        if (sb.length() > 1) {
+                            sb.delete(sb.length() - 1, sb.length());
+                        }
+                        Log.d("xiaoxinRequestBody", "{" + sb.toString() + "}");
+                    }
+                }
+                Log.d("xiaoxinResponse", responseInfo);
+//            Log.d("retrofitResponseCode", "响应码:" + response.code());
+                Log.d("xiaoxin", "----------end-----------");
+            }
+        }
+    }
+
     public <T> T createService(Class<T> service) {
         return mRetrofit.create(service);
     }
 }
+
+

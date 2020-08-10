@@ -1,11 +1,9 @@
 package com.example.nativetest;
 
-import android.os.Bundle;
 import android.view.View;
 
 import com.example.nativetest.ui.activity.BaseActivity;
 
-import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 public class VipActivity extends BaseActivity {
@@ -16,13 +14,11 @@ public class VipActivity extends BaseActivity {
 
 
 
-    @OnClick({R.id.tv_use, R.id.tv_share})
+    @OnClick({R.id.tv_use})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.tv_use:
                 readyGo(SelectNickNameColorActivity.class);
-                break;
-            case R.id.tv_share:
                 break;
         }
     }
